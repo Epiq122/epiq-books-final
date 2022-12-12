@@ -1,7 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useOktaAuth } from '@okta/okta-react';
+import { LoadingSpinner } from '../Utils/LoadingSpinner';
 
 export const Navbar = () => {
+  // for our okta auth
+  const { oktaAuth, authState } = useOktaAuth();
+
+  // this is because it takes sometime to start up
+  if (!authState) {
+    return <LoadingSpinner />;
+  }
+
+  const handleLogout = async () => oktaAuth.signOut();
+  console.log(authState);
+
   return (
     <nav className='navbar navbar-expand-lg navbar-dark bg-dark py-3'>
       {/*cuts off the corners of the page a little bit*/}
@@ -32,11 +45,26 @@ export const Navbar = () => {
             </li>
           </ul>
           <ul className='navbar-nav ms-auto navbar-dark bg-dark'>
-            <li className='nav-item m-1'>
-              <Link type='button' className='btn btn-outline-light' to='#'>
-                Sign In
-              </Link>
-            </li>
+            {!authState.isAuthenticated ? (
+              <li className='nav-item m-1'>
+                <Link
+                  type='button'
+                  className='btn btn-outline-light'
+                  to='/login'
+                >
+                  Sign In
+                </Link>
+              </li>
+            ) : (
+              <li>
+                <button
+                  className='btn btn-outline-light'
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </li>
+            )}
           </ul>
         </div>
       </div>
