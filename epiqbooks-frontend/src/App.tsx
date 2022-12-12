@@ -2,7 +2,7 @@ import './App.css';
 import React from 'react';
 import { Footer } from './layouts/NavBarAndFooter/Footer';
 import { Navbar } from './layouts/NavBarAndFooter/Navbar';
-// import { BookCheckOutPage } from '../layouts/BookCheckOutPage/BookCheckOutPage';
+import { BookCheckoutPage } from './layouts/BookCheckOutPage/BookCheckOutPage';
 import { HomePage } from './layouts/HomePage/HomePage';
 import { SearchBooksPage } from './layouts/SearchBooksPage/SearchBooksPage';
 
@@ -23,9 +23,9 @@ export const App = () => {
           <Route path='/search'>
             <SearchBooksPage />
           </Route>
-          {/* <Route path='/checkout/:bookId'>
-            <BookCheckOutPage />
-          </Route> */}
+          <Route path='/checkout/:bookId'>
+            <BookCheckoutPage />
+          </Route>
         </Switch>
       </div>
       <Footer />

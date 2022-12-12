@@ -19,55 +19,51 @@ export const BookCheckoutPage = () => {
   const [totalStars, setTotalStars] = useState<number>(0);
   const [isLoadingReview, setIsLoadingReview] = useState<boolean>(true);
 
-  // grab the path from the url
-  const bookId = () =>
-    typeof window !== 'undefined' && window.location.pathname.split('/')[2];
-
+  // Used to grab the path parameter from the URL
+  const bookId = window.location.pathname.split('/')[2];
   // this is the function called to get our Books ( BOOK ID )
   useEffect(() => {
-    return () => {
-      const fetchBook = async () => {
-        const baseUrl: string = `http://localhost:8080/api/books/${bookId()}`;
+    const fetchBook = async () => {
+      const baseUrl: string = `http://localhost:8080/api/books/${bookId}`;
 
-        // this is going to fetch the book from the backend api
-        const response = await fetch(baseUrl); // creates a variable for whatever we fetch
+      // this is going to fetch the book from the backend api
+      const response = await fetch(baseUrl); // creates a variable for whatever we fetch
 
-        // checks to see if we successfully got the data back
-        if (!response.ok) {
-          throw new Error('Something went wrong!');
-        }
-        // get the response json, for a easy way to read the data
-        const responseJson = await response.json();
+      // checks to see if we successfully got the data back
+      if (!response.ok) {
+        throw new Error('Something went wrong!');
+      }
+      // get the response json, for a easy way to read the data
+      const responseJson = await response.json();
 
-        // book model object        '
-        const loadedBook: BookModel = {
-          id: responseJson.id,
-          title: responseJson.title,
-          author: responseJson.author,
-          description: responseJson.description,
-          copies: responseJson.copies,
-          copiesAvailable: responseJson.copiesAvailable,
-          category: responseJson.category,
-          img: responseJson.img,
-        };
-
-        // set the state of the books
-        setBooks(loadedBook);
-        // set the state of loading of the state
-        setIsLoadingBook(false);
+      // book model object        '
+      const loadedBook: BookModel = {
+        id: responseJson.id,
+        title: responseJson.title,
+        author: responseJson.author,
+        description: responseJson.description,
+        copies: responseJson.copies,
+        copiesAvailable: responseJson.copiesAvailable,
+        category: responseJson.category,
+        img: responseJson.img,
       };
-      // this is incase the API call fails
-      fetchBook().catch((error: any) => {
-        setIsLoadingBook(false);
-        setHttpError(error.message);
-      });
+
+      // set the state of the books
+      setBooks(loadedBook);
+      // set the state of loading of the state
+      setIsLoadingBook(false);
     };
+    // this is incase the API call fails
+    fetchBook().catch((error: any) => {
+      setIsLoadingBook(false);
+      setHttpError(error.message);
+    });
   }, []);
 
   // REVIEWS USE EFFECT
   useEffect(() => {
     const fetchReviews = async () => {
-      const reviewUrl: string = `http://localhost:8080/api/reviews/search/findByBookId?bookId=${bookId()}`;
+      const reviewUrl: string = `http://localhost:8080/api/reviews/search/findByBookId?bookId=${bookId}`;
 
       const responseReviews = await fetch(reviewUrl);
 

@@ -17,61 +17,51 @@ export const Carousel = () => {
 
   // this is the function called to get our Books
   useEffect(() => {
-    return () => {
-      const fetchBooks = async () => {
-        const baseUrl: string = 'http://localhost:8080/api/books';
-        // url with the query params
-        const url: string = `${baseUrl}?page=0&size=9`;
-        // this is going to fetch the book from the backend api
-        const response = await fetch(url); // creates a variable for whatever we fetch
+    const fetchBooks = async () => {
+      const baseUrl = 'http://localhost:8080/api/books';
+      // url with the query params
+      const url: string = `${baseUrl}?page=0&size=9`;
+      // this is going to fetch the book from the backend api
+      const response = await fetch(url);
+      //check the response
+      if (!response.ok) {
+        throw new Error('Something went wrong');
+      }
+      //convert the response to json
+      const responseJson = await response.json();
 
-        // checks to see if we successfully got the data back
-        if (!response.ok) {
-          throw new Error('Something went wrong!');
-        }
-        // get the response json, for a easy way to read the data
-        const responseJson = await response.json();
+      // grabbed the data in the embedded book array
+      const responseData = responseJson._embedded.books;
 
-        // this it the object we want to get the json from
-        const responseData = responseJson._embedded.books;
+      // now we have all the books in responseData
 
-        const loadedBooks: BookModel[] = [];
-        // loop through the data and create a new book object
-        for (const key in responseData) {
-          loadedBooks.push({
-            id: responseData[key].id,
-            title: responseData[key].title,
-            author: responseData[key].author,
-            description: responseData[key].description,
-            copies: responseData[key].copies,
-            copiesAvailable: responseData[key].copiesAvailable,
-            category: responseData[key].category,
-            img: responseData[key].img,
-          });
-        }
-        // set the state of the books
-        setBooks(loadedBooks);
-        // set the state of loading of the state
-        setIsLoading(false);
-      };
-      // this is incase the API call fails
-      fetchBooks().catch((error: any) => {
-        setIsLoading(false);
-        setHttpError(error.message);
-      });
+      // push a whole bunch of books into the books array
+      const loadedBooks: BookModel[] = [];
+
+      for (const key in responseData) {
+        loadedBooks.push({
+          id: responseData[key].id,
+          title: responseData[key].title,
+          author: responseData[key].author,
+          description: responseData[key].description,
+          copies: responseData[key].copies,
+          copiesAvailable: responseData[key].copiesAvailable,
+          category: responseData[key].category,
+          img: responseData[key].img,
+        });
+      }
+      setBooks(loadedBooks);
+      setIsLoading(false);
     };
+    fetchBooks().catch((error: any) => {
+      setIsLoading(false);
+      setHttpError(error.message);
+    });
   }, []);
 
-  // this is for our loading
   if (isLoading) {
-    return (
-      <div className='container m-5'>
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner />;
   }
-
-  // this is for our http error
   if (httpError) {
     return (
       <div className='container m-5'>
@@ -83,7 +73,7 @@ export const Carousel = () => {
   return (
     <div className='container mt-5' style={{ height: 550 }}>
       <div className='homepage-carousel-title'>
-        <h3>Level up your skills with one of our books</h3>
+        <h3>Find your next "I stayed up too late reading" book.</h3>
       </div>
       <div
         id='carouselExampleControls'
@@ -95,7 +85,7 @@ export const Carousel = () => {
         <div className='carousel-inner'>
           <div className='carousel-item active'>
             <div className='row d-flex justify-content-center align-items-center'>
-              {/*loop through books and put on the dom* first 3* books */}
+              {/*// loop through it 3 different times*/}
               {books.slice(0, 3).map((book) => (
                 <ReturnBook book={book} key={book.id} />
               ))}
@@ -103,7 +93,6 @@ export const Carousel = () => {
           </div>
           <div className='carousel-item'>
             <div className='row d-flex justify-content-center align-items-center'>
-              {/*loop through books and put on the dom* second 3* books */}
               {books.slice(3, 6).map((book) => (
                 <ReturnBook book={book} key={book.id} />
               ))}
@@ -111,7 +100,6 @@ export const Carousel = () => {
           </div>
           <div className='carousel-item'>
             <div className='row d-flex justify-content-center align-items-center'>
-              {/*loop through books and put on the dom* last 3* books */}
               {books.slice(6, 9).map((book) => (
                 <ReturnBook book={book} key={book.id} />
               ))}

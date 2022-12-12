@@ -1,6 +1,7 @@
 import React from 'react';
-import ReviewModel from '../../models/ReviewModel';
-import { StarsReview } from './StarsReview';
+import ReviewModel from '../..//models/ReviewModel';
+
+import { StarsReview } from './/StarsReview';
 
 export const Review: React.FC<{ review: ReviewModel }> = (props) => {
   // Sret up the date inforamtion
