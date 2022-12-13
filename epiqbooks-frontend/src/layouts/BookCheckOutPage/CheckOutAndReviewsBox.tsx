@@ -6,7 +6,40 @@ import { Link } from 'react-router-dom';
 export const CheckoutAndReviewBox: React.FC<{
   book: BookModel | undefined;
   mobile: boolean;
+  loansCount: number;
+  isAuthenticated: any;
+  isCheckedOut: boolean;
+  checkOutBook: any;
 }> = (props) => {
+  function buttonRender() {
+    if (props.isAuthenticated) {
+      // check if the book isnt checked out and the loans count is less than 5
+      if (!props.isCheckedOut && props.loansCount < 5) {
+        return (
+          <button
+            onClick={() => props.checkOutBook()}
+            className='btn btn-success btn-lg'
+          >
+            Checkout
+          </button>
+        );
+      } else if (props.isCheckedOut) {
+        return (
+          <p>
+            <b>Book currently checked out</b>
+          </p>
+        );
+        // if the loans count is more than 5
+      } else if (!props.isCheckedOut) {
+        return <p className='text-danger'>Sorry! to many books checked out</p>;
+      }
+    }
+    return (
+      <Link to={'/login'} className='btn btn-success btn-lg'>
+        Sign in
+      </Link>
+    );
+  }
   return (
     // checks to see if the card needs to be mobile or not
     <div
@@ -17,7 +50,7 @@ export const CheckoutAndReviewBox: React.FC<{
       <div className='card-body container'>
         <div className='mt-3'>
           <p>
-            <b>0/5 </b>
+            <b>{props.loansCount}/5 </b>
             books checked out
           </p>
           <hr />
@@ -39,9 +72,10 @@ export const CheckoutAndReviewBox: React.FC<{
             </p>
           </div>
         </div>
-        <Link to='/#' className='btn btn-success btn-lg'>
+        {/* <Link to='/#' className='btn btn-success btn-lg'>
           Sign in
-        </Link>
+        </Link> */}
+        {buttonRender()}
         <hr />
         <p className='mt-3'>
           This number can change until placing order has been complete

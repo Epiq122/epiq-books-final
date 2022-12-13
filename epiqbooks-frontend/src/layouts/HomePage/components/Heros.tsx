@@ -76,7 +76,7 @@ export const Heros = () => {
               {authState?.isAuthenticated ? (
                 <Link
                   type='button'
-                  className='btn-black btn-lg text-white'
+                  className='btn-main-color btn-lg text-white'
                   to='search'
                 >
                   Explore Top Books
