@@ -4,6 +4,7 @@ package com.gleasondev.epiqbooksbackend.controller;
 
 import com.gleasondev.epiqbooksbackend.entity.Book;
 import com.gleasondev.epiqbooksbackend.service.BookService;
+import com.gleasondev.epiqbooksbackend.utils.ExtractJWT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +22,10 @@ public class BookController {
 
 
     @GetMapping("/secure/currentloans/count")
-    public Integer currentLoansCount() {
-        String userEmail = "gordontest@email.com";
+    // this is expecting something in the request header that has a key of authorization and pass it into a variable
+    // called token
+    public Integer currentLoansCount(@RequestHeader(value = "Authorization") String token) {
+        String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
 
         return bookService.currentLoansCount(userEmail);
     }
@@ -30,17 +33,16 @@ public class BookController {
 
     // checkout book by user
     @GetMapping("/secure/ischeckedout/byuser")
-    public Boolean checkoutBookByUser(@RequestParam Long bookId){
-        String userEmail = "gordontest@email.com";
+    public Boolean checkoutBookByUser(@RequestParam Long bookId, @RequestHeader(value = "Authorization") String token) {
+//        String userEmail = "gordontest@email.com";
+        String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
         return bookService.isBookCheckedOut(userEmail, bookId);
     }
 
 
-
-
     @PutMapping("/secure/checkout")
-    public Book checkoutBook(@RequestParam Long bookId) throws Exception  {
-        String userEmail = "gordontest@email.com";
+    public Book checkoutBook(@RequestParam Long bookId, @RequestHeader(value = "Authorization") String token) throws Exception {
+        String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
         return bookService.checkoutBook(userEmail, bookId);
     }
 
