@@ -18,4 +18,4 @@ BackEnd: Java, Spring Boot,Spring Boot Data JPA, Okta, Lombok, Maven
 
 # Learning Goals
 
-Learning more about NextJs/React/TypeScript for the frontend. Learning more about Boostrap and Tailwind for the styling.
+Learning more about React/TypeScript for the frontend. Learning more about Boostrap and Tailwind for the styling.
