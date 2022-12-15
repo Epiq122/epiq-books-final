@@ -23,6 +23,11 @@ export const BookCheckoutPage = () => {
   const [totalStars, setTotalStars] = useState<number>(0);
   const [isLoadingReview, setIsLoadingReview] = useState<boolean>(true);
 
+  // For leaving a review ( NOT STARS)
+  // has the user left a review on this specific book
+  const [isReviewLeft, setIsReviewLeft] = useState<boolean>(false);
+  const [isLoadingUserReview, setIsLoadingUserReview] = useState<boolean>(true);
+
   //Loans Count State
   const [loansCount, setLoansCount] = useState<number>(0);
   const [isLoadingLoansCount, setIsLoadingLoansCount] = useState<boolean>(true);
@@ -73,7 +78,7 @@ export const BookCheckoutPage = () => {
     });
   }, [isCheckedOut]);
 
-  // REVIEWS USE EFFECT
+  // REVIEWS USE EFFECT ( stars )
   useEffect(() => {
     const fetchReviews = async () => {
       const reviewUrl: string = `http://localhost:8080/api/reviews/search/findByBookId?bookId=${bookId}`;
@@ -114,8 +119,34 @@ export const BookCheckoutPage = () => {
       setIsLoadingReview(false);
       setHttpError(error.message);
     });
-  }, []);
+  }, [isReviewLeft]);
 
+  // Reviews USE EFFECT ( user review )
+  useEffect(() => {
+    const fetchUserReviewBook = async () => {
+      if (authState && authState.isAuthenticated) {
+        const url = `http://localhost:8080/api/reviews/secure/user/book/?bookId=${bookId}`;
+        const requestOptions = {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${authState.accessToken?.accessToken}`,
+            'Content-Type': 'application/json',
+          },
+        };
+        const userReview = await fetch(url, requestOptions);
+        if (!userReview.ok) {
+          throw new Error('Something went wrong');
+        }
+        const userReviewResponseJson = await userReview.json();
+        setIsReviewLeft(userReviewResponseJson);
+      }
+      setIsLoadingUserReview(false);
+    };
+    fetchUserReviewBook().catch((error: any) => {
+      setIsLoadingUserReview(false);
+      setHttpError(error.message);
+    });
+  }, [authState]);
   // LOANS COUNT USE EFFECT
   useEffect(() => {
     const fetchLoansCount = async () => {
@@ -180,7 +211,8 @@ export const BookCheckoutPage = () => {
     isLoadingBook ||
     isLoadingReview ||
     isLoadingLoansCount ||
-    isLoadingBookCheckedOut
+    isLoadingBookCheckedOut ||
+    isLoadingUserReview
   ) {
     return (
       <div className='container m-5'>
@@ -247,6 +279,7 @@ export const BookCheckoutPage = () => {
             isAuthenticated={authState?.isAuthenticated}
             isCheckedOut={isCheckedOut}
             checkOutBook={checkOutBook}
+            isReviewLeft={isReviewLeft}
           />
         </div>
         <hr />
@@ -280,6 +313,7 @@ export const BookCheckoutPage = () => {
           isAuthenticated={authState?.isAuthenticated}
           isCheckedOut={isCheckedOut}
           checkOutBook={checkOutBook}
+          isReviewLeft={isReviewLeft}
         />
         <hr />
         <LatestReviews reviews={reviews} bookId={book?.id} mobile={true} />

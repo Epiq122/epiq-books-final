@@ -10,21 +10,20 @@ import org.springframework.web.accept.ContentNegotiationStrategy;
 import org.springframework.web.accept.HeaderContentNegotiationStrategy;
 
 @Configuration
-public class SecurityConfiguration
-{
+public class SecurityConfiguration {
 
     // returns a filter chain
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception
-    {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // Disable CSRF protection (cross site request forgery)
         http.csrf().disable();
         // Protect endpoints at /api/<type>/secure
         http.authorizeRequests(authorizeRequests ->
-                authorizeRequests
-                        .antMatchers("/api/books/secure/**")
-                        .authenticated())
-                        .oauth2ResourceServer().jwt();
+                    authorizeRequests
+                            .antMatchers("/api/books/secure/**", "/api/reviews/secure/**")
+
+                            .authenticated())
+            .oauth2ResourceServer().jwt();
 
         // Add Cors filters
         http.cors();
@@ -36,9 +35,8 @@ public class SecurityConfiguration
         Okta.configureResourceServer401ResponseBody(http);
 
 
-       return http.build();
+        return http.build();
     }
-
 
 
 }

@@ -21,6 +21,8 @@ export const StarsReview: React.FC<{ rating: Number; size: number }> = (
         break;
       }
     }
+  } else {
+    emptyStars = 5;
   }
 
   return (
