@@ -2,7 +2,7 @@
 
 class ReviewModel {
   id: number;
-  bookId: number;
+  book_Id: number;
   userEmail: string;
   rating: number;
   reviewDescription?: string;
@@ -17,7 +17,7 @@ class ReviewModel {
     date: string
   ) {
     this.id = id;
-    this.bookId = bookId;
+    this.book_Id = bookId;
     this.userEmail = userEmail;
     this.rating = rating;
     this.reviewDescription = reviewDescription;

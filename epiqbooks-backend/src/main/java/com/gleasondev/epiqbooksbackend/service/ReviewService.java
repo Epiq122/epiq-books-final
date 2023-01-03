@@ -37,10 +37,10 @@ public class ReviewService {
         Review review = new Review();
         // set the book id to the request id
         review.setBookId(reviewRequest.getBookId());
-        // set the user email to the request email
-        review.setUserEmail(userEmail);
         // set the rating to the request rating
         review.setRating(reviewRequest.getRating());
+        // set the user email to the request email
+        review.setUserEmail(userEmail);
         // if the request has a review description, change it to a string and save it to the DB after setting the date
         if (reviewRequest.getReviewDescription().isPresent()) {
             // allows us to copy all the data from the optional to our string

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { StarsReview } from './StarsReview';
 
-export const LeaveAReview: React.FC<{}> = (props) => {
+export const LeaveAReview: React.FC<{ submitReview: any }> = (props) => {
   const [starInput, setStarInput] = useState(0);
 
   // Adding optional review description if a star value is selected
@@ -101,9 +101,11 @@ export const LeaveAReview: React.FC<{}> = (props) => {
             ></textarea>
           </div>
           <div>
-            {/* chaneg text color black with tailwind */}
-
-            <button type='button' className='btn btn-primary mt-3 text-black'>
+            <button
+              type='button'
+              onClick={() => props.submitReview(starInput, reviewDescription)}
+              className='btn btn-primary mt-3 text-black'
+            >
               Submit Review
             </button>
           </div>

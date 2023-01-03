@@ -8,6 +8,7 @@ import React from 'react';
 import { CheckoutAndReviewBox } from './CheckOutAndReviewsBox';
 import { LatestReviews } from './LatestReviews';
 import { useOktaAuth } from '@okta/okta-react/';
+import ReviewRequestModel from '../../models/ReviewRequestModel';
 
 export const BookCheckoutPage = () => {
   // Add our Okta Authenication
@@ -76,7 +77,7 @@ export const BookCheckoutPage = () => {
       setIsLoadingBook(false);
       setHttpError(error.message);
     });
-  }, [isCheckedOut]);
+  }, [bookId, isCheckedOut]);
 
   // REVIEWS USE EFFECT ( stars )
   useEffect(() => {
@@ -97,7 +98,7 @@ export const BookCheckoutPage = () => {
       for (const key in responseData) {
         loadedReviews.push({
           id: responseData[key].id,
-          bookId: responseData[key].bookId,
+          book_Id: responseData[key].bookId,
           date: responseData[key].date,
           rating: responseData[key].rating,
           userEmail: responseData[key].userEmail,
@@ -119,7 +120,7 @@ export const BookCheckoutPage = () => {
       setIsLoadingReview(false);
       setHttpError(error.message);
     });
-  }, [isReviewLeft]);
+  }, [bookId, isReviewLeft]);
 
   // Reviews USE EFFECT ( user review )
   useEffect(() => {
@@ -146,7 +147,7 @@ export const BookCheckoutPage = () => {
       setIsLoadingUserReview(false);
       setHttpError(error.message);
     });
-  }, [authState]);
+  }, [authState, bookId]);
   // LOANS COUNT USE EFFECT
   useEffect(() => {
     const fetchLoansCount = async () => {
@@ -247,29 +248,60 @@ export const BookCheckoutPage = () => {
     }
     setIsCheckedOut(true);
   }
+
+  // for submitting a review
+  async function submitReview(starInput: number, reviewDescription: string) {
+    let bookId: number = 0;
+    // lets us know if there is a book id
+    if (book?.id) {
+      bookId = book.id;
+    }
+    const reviewRequestModel = new ReviewRequestModel(
+      starInput,
+      bookId,
+      reviewDescription
+    );
+    // creates a URL that acesses the endpoint in the spring app
+    const url = `http://localhost:8080/api/reviews/secure`;
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        //passing in the bare token and auth
+        Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(reviewRequestModel),
+    };
+    // calls the api
+    const reviewResponse = await fetch(url, requestOptions);
+    if (!reviewResponse.ok) {
+      throw new Error('Something went wrong!');
+    }
+    setIsReviewLeft(true);
+  }
+
   return (
     <div>
       <div className='container d-none d-lg-block'>
         <div className='row mt-5'>
           <div className='col-sm-2 col-md-2'>
             {book?.img ? (
-              <img src={book?.img} alt='book' width={226} height={349} />
+              <img src={book?.img} width='226' height='349' alt='Book' />
             ) : (
               <img
-                src={'../../../images/python-book.png'}
-                alt='book'
-                width={226}
-                height={349}
+                src={require('../../images/python-book.png')}
+                width='226'
+                height='349'
+                alt='Book'
               />
             )}
           </div>
-
           <div className='col-4 col-md-4 container'>
             <div className='ml-2'>
               <h2>{book?.title}</h2>
               <h5 className='text-primary'>{book?.author}</h5>
               <p className='lead'>{book?.description}</p>
-              <StarsReview rating={2.5} size={32} />
+              <StarsReview rating={totalStars} size={32} />
             </div>
           </div>
           <CheckoutAndReviewBox
@@ -280,21 +312,22 @@ export const BookCheckoutPage = () => {
             isCheckedOut={isCheckedOut}
             checkOutBook={checkOutBook}
             isReviewLeft={isReviewLeft}
+            submitReview={submitReview}
           />
         </div>
         <hr />
         <LatestReviews reviews={reviews} bookId={book?.id} mobile={false} />
       </div>
       <div className='container d-lg-none mt-5'>
-        <div className='d-flex justify-content-center align-items-center'>
+        <div className='d-flex justify-content-center alighn-items-center'>
           {book?.img ? (
-            <img src={book?.img} alt='book' width={226} height={349} />
+            <img src={book?.img} width='226' height='349' alt='Book' />
           ) : (
             <img
-              src={'../../../images/python-book.png'}
-              alt='book'
-              width={226}
-              height={349}
+              src={require('../../images/python-book.png')}
+              width='226'
+              height='349'
+              alt='Book'
             />
           )}
         </div>
@@ -303,7 +336,7 @@ export const BookCheckoutPage = () => {
             <h2>{book?.title}</h2>
             <h5 className='text-primary'>{book?.author}</h5>
             <p className='lead'>{book?.description}</p>
-            <StarsReview rating={4} size={32} />
+            <StarsReview rating={totalStars} size={32} />
           </div>
         </div>
         <CheckoutAndReviewBox
@@ -314,6 +347,7 @@ export const BookCheckoutPage = () => {
           isCheckedOut={isCheckedOut}
           checkOutBook={checkOutBook}
           isReviewLeft={isReviewLeft}
+          submitReview={submitReview}
         />
         <hr />
         <LatestReviews reviews={reviews} bookId={book?.id} mobile={true} />
