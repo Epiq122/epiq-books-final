@@ -146,6 +146,91 @@ export const Loans = () => {
       </div>
 
       {/* Mobile */}
+      <div className='container d-lg-none mt-2'>
+        {/* makes sure the endpoint returns at least 1 current loan */}
+        {shelfCurrentLoans.length > 0 ? (
+          <>
+            <h5 className='mb-3'>Current Loans: </h5>
+            {shelfCurrentLoans.map((shelfCurrentLoan) => (
+              <div key={shelfCurrentLoan.book.id}>
+                <div className='d-flex justify-content-center align-items-center'>
+                  {shelfCurrentLoan.book?.img ? (
+                    <img
+                      src={shelfCurrentLoan.book?.img}
+                      width='226'
+                      height='349'
+                      alt='book'
+                    ></img>
+                  ) : (
+                    <img
+                      src={require('../../../images/python-book.png')}
+                      width='226'
+                      height='349'
+                      alt='book'
+                    />
+                  )}
+                </div>
+                <div className='card d-flex mt-5 mb-3'>
+                  <div className='card-body container'>
+                    <div className='mt-3'>
+                      <h4>Loan Options</h4>
+                      {shelfCurrentLoan.daysLeft > 0 && (
+                        <p className='text-secondary'>
+                          Due in {shelfCurrentLoan.daysLeft} days
+                        </p>
+                      )}
+                      {shelfCurrentLoan.daysLeft === 0 && (
+                        <p className='text-success'>Due today!</p>
+                      )}
+                      {shelfCurrentLoan.daysLeft < 0 && (
+                        <p className='text-danger'>
+                          Overdue by {shelfCurrentLoan.daysLeft} days.
+                        </p>
+                      )}
+                      <div className='list-group mt-3'>
+                        <button
+                          className='list-group-item list-group-item-action'
+                          aria-current='true'
+                          data-bs-toggle='modal'
+                          data-bs-target={`#mobilemodal${shelfCurrentLoan.book.id}`}
+                        >
+                          Manage Loan
+                        </button>
+                        <Link
+                          to={'search'}
+                          className='list-group-item list-group-item-action'
+                        >
+                          Search more books?
+                        </Link>
+                      </div>
+                    </div>
+                    <hr />
+                    <p className='mt-3'>
+                      Please leave a review for this book. Your feedback is
+                      appreciated!
+                    </p>
+                    <Link
+                      className='btn btn-primary'
+                      to={`/checkout/${shelfCurrentLoan.book.id}`}
+                    >
+                      Leave a Review
+                    </Link>
+                  </div>
+                </div>
+
+                <hr />
+              </div>
+            ))}
+          </>
+        ) : (
+          <>
+            <h3 className='mt-3'>Currently you have no books checked out</h3>
+            <Link className='btn btn-primary' to={'search'}>
+              Search for books
+            </Link>
+          </>
+        )}
+      </div>
     </div>
   );
 };
