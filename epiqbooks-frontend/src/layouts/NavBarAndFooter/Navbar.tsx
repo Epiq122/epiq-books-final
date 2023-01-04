@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
 import { LoadingSpinner } from '../Utils/LoadingSpinner';
 
@@ -43,6 +43,13 @@ export const Navbar = () => {
                 Search Books
               </Link>
             </li>
+            {authState.isAuthenticated && (
+              <li>
+                <NavLink className='nav-link' to='/shelf'>
+                  Shelf
+                </NavLink>
+              </li>
+            )}
           </ul>
           <ul className='navbar-nav ms-auto navbar-dark bg-dark'>
             {!authState.isAuthenticated ? (

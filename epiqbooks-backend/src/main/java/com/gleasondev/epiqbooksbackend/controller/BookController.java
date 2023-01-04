@@ -3,10 +3,13 @@ package com.gleasondev.epiqbooksbackend.controller;
 
 
 import com.gleasondev.epiqbooksbackend.entity.Book;
+import com.gleasondev.epiqbooksbackend.responsemodels.ShelfCurrentLoansResponse;
 import com.gleasondev.epiqbooksbackend.service.BookService;
 import com.gleasondev.epiqbooksbackend.utils.ExtractJWT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin("http://localhost:3000") // to prevent coors error
 @RestController
@@ -20,8 +23,16 @@ public class BookController {
         this.bookService = bookService;
     }
 
+    @GetMapping("/secure/currentloans")
+    public List<ShelfCurrentLoansResponse> currentLoans(@RequestHeader(value = "Authorization") String token)
+            throws Exception {
+        String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
+        return bookService.currentLoans(userEmail);
+    }
+
 
     @GetMapping("/secure/currentloans/count")
+
     // this is expecting something in the request header that has a key of authorization and pass it into a variable
     // called token
     public Integer currentLoansCount(@RequestHeader(value = "Authorization") String token) {
@@ -46,5 +57,5 @@ public class BookController {
         return bookService.checkoutBook(userEmail, bookId);
     }
 
-    }
+}
 

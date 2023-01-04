@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import ReviewModel from '../../../models/ReviewModel';
 import { LoadingSpinner } from '../../Utils/LoadingSpinner';
+import { Pagination } from '../../Utils/Pagination';
 import { Review } from '../../Utils/Review';
 
 export const ReviewListPage = () => {
@@ -55,7 +56,7 @@ export const ReviewListPage = () => {
       setIsLoading(false);
       setHttpError(error.message);
     });
-  }, [currentPage]);
+  }, [bookId, currentPage, reviewsPerPage]);
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -92,6 +93,14 @@ export const ReviewListPage = () => {
           <Review review={review} key={review.id} />
         ))}
       </div>
+      {/*Pagination*/}
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          paginate={paginate}
+        />
+      )}
     </div>
   );
 };
