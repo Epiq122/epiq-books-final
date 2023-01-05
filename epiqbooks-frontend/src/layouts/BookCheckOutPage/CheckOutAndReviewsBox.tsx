@@ -1,7 +1,7 @@
 import React from 'react';
-import BookModel from '../..//models/BookModel';
-// @ts-ignore
 import { Link } from 'react-router-dom';
+import BookModel from '../../models/BookModel';
+// @ts-ignore
 import { LeaveAReview } from '../Utils/LeaveAReview';
 
 export const CheckoutAndReviewBox: React.FC<{
@@ -26,14 +26,16 @@ export const CheckoutAndReviewBox: React.FC<{
             Checkout
           </button>
         );
-      } else if (props.isCheckedOut) {
+      }
+      if (props.isCheckedOut) {
         return (
           <p>
             <b>Book currently checked out</b>
           </p>
         );
         // if the loans count is more than 5
-      } else if (!props.isCheckedOut) {
+      }
+      if (!props.isCheckedOut) {
         return <p className='text-danger'>Sorry! to many books checked out</p>;
       }
     }
@@ -50,7 +52,8 @@ export const CheckoutAndReviewBox: React.FC<{
           <LeaveAReview submitReview={props.submitReview} />
         </div>
       );
-    } else if (props.isAuthenticated && props.isReviewLeft) {
+    }
+    if (props.isAuthenticated && props.isReviewLeft) {
       return (
         <p>
           <b>Thanks for the review!</b>

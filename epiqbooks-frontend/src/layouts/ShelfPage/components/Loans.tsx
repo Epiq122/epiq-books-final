@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import ShelfCurrentLoans from '../../../models/ShelfCurrentLoans';
 import { LoadingSpinner } from '../../Utils/LoadingSpinner';
 import { Link } from 'react-router-dom';
+import { LoansModal } from './LoansModal';
 
 export const Loans = () => {
   const { authState } = useOktaAuth();
@@ -12,8 +13,8 @@ export const Loans = () => {
   const [shelfCurrentLoans, setShelfCurrentLoans] = useState<
     ShelfCurrentLoans[]
   >([]);
-
   const [isLoadingUserLoans, setIsLoadingUserLoans] = useState(true);
+  const [checkout, setCheckout] = useState(false);
 
   // Current Loans Use Effect
   useEffect(() => {
@@ -42,7 +43,7 @@ export const Loans = () => {
     });
     // scrolls to top of page
     window.scrollTo(0, 0);
-  }, [authState]);
+  }, [authState, checkout]);
 
   if (isLoadingUserLoans) {
     return <LoadingSpinner />;
@@ -53,6 +54,39 @@ export const Loans = () => {
         <p>{httpError}</p>
       </div>
     );
+  }
+
+  async function returnBook(bookId: number) {
+    const url = `http://localhost:8080/api/books/secure/return/?bookId=${bookId}`;
+    const requestOptions = {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
+        'Content-Type': 'application/json',
+      },
+    };
+    const returnBookResponse = await fetch(url, requestOptions);
+    if (!returnBookResponse.ok) {
+      throw new Error('Something went wrong');
+    }
+    setCheckout(!checkout);
+  }
+
+  // Renew Loan
+  async function renewLoan(bookId: number) {
+    const url = `http://localhost:8080/api/books/secure/renew/loan/?bookId=${bookId}`;
+    const requestOptions = {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
+        'Content-Type': 'application/json',
+      },
+    };
+    const renewLoanResponse = await fetch(url, requestOptions);
+    if (!renewLoanResponse.ok) {
+      throw new Error('Something went wrong');
+    }
+    setCheckout(!checkout);
   }
 
   return (
@@ -132,6 +166,12 @@ export const Loans = () => {
                   </div>
                 </div>
                 <hr />
+                <LoansModal
+                  shelfCurrentLoan={shelfCurrentLoan}
+                  mobile={false}
+                  returnBook={returnBook}
+                  renewLoan={renewLoan}
+                />
               </div>
             ))}
           </>
@@ -219,6 +259,12 @@ export const Loans = () => {
                 </div>
 
                 <hr />
+                <LoansModal
+                  shelfCurrentLoan={shelfCurrentLoan}
+                  mobile={true}
+                  returnBook={returnBook}
+                  renewLoan={renewLoan}
+                />
               </div>
             ))}
           </>

@@ -1,16 +1,15 @@
-import { useEffect, useState } from 'react';
-import { LoadingSpinner } from '../../layouts/Utils/LoadingSpinner';
-import BookModel from '../..//models/BookModel';
-import { StarsReview } from '../../layouts/Utils/StarsReview';
-import ReviewModel from '../..//models/ReviewModel';
+import React, { useEffect, useState } from 'react';
+import { useOktaAuth } from '@okta/okta-react/';
+import { LoadingSpinner } from '../Utils/LoadingSpinner';
+import BookModel from '../../models/BookModel';
+import { StarsReview } from '../Utils/StarsReview';
+import ReviewModel from '../../models/ReviewModel';
 
-import React from 'react';
 import { CheckoutAndReviewBox } from './CheckOutAndReviewsBox';
 import { LatestReviews } from './LatestReviews';
-import { useOktaAuth } from '@okta/okta-react/';
 import ReviewRequestModel from '../../models/ReviewRequestModel';
 
-export const BookCheckoutPage = () => {
+export function BookCheckoutPage() {
   // Add our Okta Authenication
   const { authState } = useOktaAuth();
 
@@ -29,7 +28,7 @@ export const BookCheckoutPage = () => {
   const [isReviewLeft, setIsReviewLeft] = useState<boolean>(false);
   const [isLoadingUserReview, setIsLoadingUserReview] = useState<boolean>(true);
 
-  //Loans Count State
+  // Loans Count State
   const [loansCount, setLoansCount] = useState<number>(0);
   const [isLoadingLoansCount, setIsLoadingLoansCount] = useState<boolean>(true);
 
@@ -104,7 +103,7 @@ export const BookCheckoutPage = () => {
           userEmail: responseData[key].userEmail,
           reviewDescription: responseData[key].reviewDescription,
         });
-        weightedStarReview = weightedStarReview + responseData[key].rating;
+        weightedStarReview += responseData[key].rating;
       }
       // find the average of the weighted star review
       if (loadedReviews) {
@@ -266,7 +265,7 @@ export const BookCheckoutPage = () => {
     const requestOptions = {
       method: 'POST',
       headers: {
-        //passing in the bare token and auth
+        // passing in the bare token and auth
         Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
         'Content-Type': 'application/json',
       },
@@ -315,6 +314,7 @@ export const BookCheckoutPage = () => {
             submitReview={submitReview}
           />
         </div>
+
         <hr />
         <LatestReviews reviews={reviews} bookId={book?.id} mobile={false} />
       </div>
@@ -341,7 +341,7 @@ export const BookCheckoutPage = () => {
         </div>
         <CheckoutAndReviewBox
           book={book}
-          mobile={true}
+          mobile
           loansCount={loansCount}
           isAuthenticated={authState?.isAuthenticated}
           isCheckedOut={isCheckedOut}
@@ -350,8 +350,8 @@ export const BookCheckoutPage = () => {
           submitReview={submitReview}
         />
         <hr />
-        <LatestReviews reviews={reviews} bookId={book?.id} mobile={true} />
+        <LatestReviews reviews={reviews} bookId={book?.id} mobile />
       </div>
     </div>
   );
-};
+}

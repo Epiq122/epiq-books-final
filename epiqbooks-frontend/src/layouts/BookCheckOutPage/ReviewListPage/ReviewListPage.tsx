@@ -4,7 +4,7 @@ import { LoadingSpinner } from '../../Utils/LoadingSpinner';
 import { Pagination } from '../../Utils/Pagination';
 import { Review } from '../../Utils/Review';
 
-export const ReviewListPage = () => {
+export function ReviewListPage() {
   // OUR STATE
 
   const [reviews, setReviews] = useState<ReviewModel[]>([]);
@@ -31,6 +31,7 @@ export const ReviewListPage = () => {
         throw new Error('Something went wrong!');
       }
       const responseJsonReviews = await responseReviews.json();
+
       const responseData = responseJsonReviews._embedded.reviews;
       setTotalAmountOfReviews(responseJsonReviews.page.totalElements);
       setTotalPages(responseJsonReviews.page.totalPages);
@@ -72,7 +73,7 @@ export const ReviewListPage = () => {
   const indexOfLastReview: number = currentPage * reviewsPerPage;
   const indexOfFirstReview: number = indexOfLastReview - reviewsPerPage;
 
-  let lastItem =
+  const lastItem =
     reviewsPerPage * currentPage <= totalAmountOfReviews
       ? reviewsPerPage * currentPage
       : totalAmountOfReviews;
@@ -88,12 +89,12 @@ export const ReviewListPage = () => {
         {indexOfFirstReview + 1} to {lastItem} of {totalAmountOfReviews} items:
       </p>
       <div className='row'>
-        {/*this  maps through all the current reviews and then creates review component*/}
+        {/* this  maps through all the current reviews and then creates review component */}
         {reviews.map((review) => (
           <Review review={review} key={review.id} />
         ))}
       </div>
-      {/*Pagination*/}
+      {/* Pagination */}
       {totalPages > 1 && (
         <Pagination
           currentPage={currentPage}
@@ -103,4 +104,4 @@ export const ReviewListPage = () => {
       )}
     </div>
   );
-};
+}

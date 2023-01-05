@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
 import { LoadingSpinner } from '../Utils/LoadingSpinner';
 
-export const Navbar = () => {
+export function Navbar() {
   // for our okta auth
   const { oktaAuth, authState } = useOktaAuth();
 
@@ -17,7 +17,7 @@ export const Navbar = () => {
 
   return (
     <nav className='navbar navbar-expand-lg navbar-dark bg-dark py-3'>
-      {/*cuts off the corners of the page a little bit*/}
+      {/* cuts off the corners of the page a little bit */}
       <div className='container-fluid'>
         <span className='navbar-brand'>Epiq Books</span>
         <button
@@ -29,7 +29,7 @@ export const Navbar = () => {
           aria-expanded='false'
           aria-label='Toggle navigation'
         >
-          <span className='navbar-toggler-icon'></span>
+          <span className='navbar-toggler-icon' />
         </button>
         <div className='navbar-collapse' id='navbarNavDropDown'>
           <ul className='navbar-nav'>
@@ -77,4 +77,4 @@ export const Navbar = () => {
       </div>
     </nav>
   );
-};
+}
