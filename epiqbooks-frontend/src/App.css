@@ -72,3 +72,11 @@ body {
 .searchBooksMain {
   background: #0e76a8;
 }
+
+#submit-question {
+  background: rgb(14 165 233);
+}
+/*change hover color for #submit-question */
+#submit-question:hover {
+  background: rgb(2 132 199);
+}
