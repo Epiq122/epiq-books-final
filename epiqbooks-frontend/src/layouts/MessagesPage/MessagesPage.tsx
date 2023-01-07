@@ -14,7 +14,7 @@ export const MessagesPage = () => {
           <div className='nav nav-tabs' id='nav-tab' role='tablist'>
             <button
               onClick={() => setMessagesClick(false)}
-              className='nav-link active  text-black border-blue-700 py-2 px-4 border'
+              className='nav-link active'
               id='nav-send-message-tab'
               data-bs-toggle='tab'
               data-bs-target='#nav-send-message'
@@ -27,9 +27,8 @@ export const MessagesPage = () => {
             </button>
             <button
               onClick={() => setMessagesClick(true)}
-              className='nav-link  hover:bg-gray-900 text-black font-bold py-2 px-4 border border-blue-700 rounded
-'
-              id='nav-send-message-tab'
+              className='nav-link'
+              id='nav-message-tab'
               data-bs-toggle='tab'
               data-bs-target='#nav-message'
               type='button'
@@ -37,7 +36,7 @@ export const MessagesPage = () => {
               aria-controls='nav-message'
               aria-selected='false'
             >
-              Reponse Pending
+              Q/A Response/Pending
             </button>
           </div>
         </nav>
