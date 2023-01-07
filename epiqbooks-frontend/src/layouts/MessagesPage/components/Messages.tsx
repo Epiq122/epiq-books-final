@@ -20,11 +20,10 @@ export const Messages = () => {
 
   useEffect(() => {
     const fetchUserMessages = async () => {
-      if (authState && authState.isAuthenticated) {
+      if (authState && authState?.isAuthenticated) {
         const url = `http://localhost:8080/api/messages/search/findByUserEmail/?userEmail=${
           authState?.accessToken?.claims.sub
-        }
-        &page=${currentPage - 1}&size=${messagesPerPage}`;
+        }&page=${currentPage - 1}&size=${messagesPerPage}`;
         const requestOptions = {
           method: 'GET',
           headers: {
@@ -34,7 +33,7 @@ export const Messages = () => {
         };
         const messagesResponse = await fetch(url, requestOptions);
         if (!messagesResponse.ok) {
-          throw new Error('Error fetching messages');
+          throw new Error('Something went wrong!');
         }
         const messagesResponseJson = await messagesResponse.json();
         setMessages(messagesResponseJson._embedded.messages);
@@ -43,8 +42,8 @@ export const Messages = () => {
       setIsLoadingMessages(false);
     };
     fetchUserMessages().catch((error: any) => {
-      setHttpError(error.message);
       setIsLoadingMessages(false);
+      setHttpError(error.messages);
     });
     window.scrollTo(0, 0);
   }, [authState, currentPage]);
@@ -54,7 +53,11 @@ export const Messages = () => {
   }
 
   if (httpError) {
-    return <div className='container m-5'>{httpError}</div>;
+    return (
+      <div className='container m-5'>
+        <p>{httpError}</p>
+      </div>
+    );
   }
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
@@ -82,7 +85,9 @@ export const Messages = () => {
                     </>
                   ) : (
                     <p>
-                      <i>Pending response from administration.</i>
+                      <i>
+                        Pending response from administration. Please be patient.
+                      </i>
                     </p>
                   )}
                 </div>

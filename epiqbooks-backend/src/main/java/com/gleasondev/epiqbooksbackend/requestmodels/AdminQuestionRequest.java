@@ -1,0 +1,1 @@
+// this is the object we send from our react app to our backend, so we can update the current response from the admin.package com.gleasondev.epiqbooksbackend.requestmodels;import lombok.Data;@Datapublic class AdminQuestionRequest {    private Long id;    private String response;}

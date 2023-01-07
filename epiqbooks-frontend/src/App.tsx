@@ -25,8 +25,6 @@ export const App = () => {
   const customAuthHandler = () => {
     history.push('/login');
   };
-
-  // pushes the user to the history
   const history = useHistory();
   const restoreOriginalUri = async (_oktaAuth: any, originalUri: any) => {
     history.replace(toRelativeUrl(originalUri || '/', window.location.origin));
