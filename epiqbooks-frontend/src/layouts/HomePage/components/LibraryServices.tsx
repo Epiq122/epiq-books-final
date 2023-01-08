@@ -10,10 +10,10 @@ export const LibraryServices = () => {
     <div className='container my-5'>
       <div className='row p-4 align-items-center border shadow-lg'>
         <div className='col-lg-7 p-3'>
-          <h1 className='display-4 fw-bold'>
+          <h1 className='display-4 fw-bold text-red-200'>
             Cant' find what you're looking for?
           </h1>
-          <p className='lead'>
+          <p className='lead text-white'>
             We're here to help. Our Admins are ready to assist you with your
             research needs. Simply send them a personal message and they'll get
             back to you as soon as possible.
@@ -23,7 +23,8 @@ export const LibraryServices = () => {
               <Link
                 to='/messages'
                 type='button'
-                className='btn main-color btn-lg px-4 me-md-2 fw-bold text-white'
+                className='bg-black text-white rounded-lg hover:bg-gray-500 pt-2
+            pb-2 pl-4 pr-4 mt-3'
               >
                 Library Services
               </Link>

@@ -73,7 +73,9 @@ export const Carousel = () => {
   return (
     <div className='container mt-5' style={{ height: 550 }}>
       <div className='homepage-carousel-title'>
-        <h3>Find your next "I stayed up too late reading" book.</h3>
+        <h3 className='text-gray-200 text-xl'>
+          Take your learning to an EPIQ new level!
+        </h3>
       </div>
       <div
         id='carouselExampleControls'
@@ -139,7 +141,11 @@ export const Carousel = () => {
         </div>
       </div>
       <div className='homepage-carousel-title mt-3'>
-        <Link className='btn btn-outline-secondary btn-lg' to='/search'>
+        <Link
+          className='bg-black text-white rounded-lg hover:bg-gray-500 pt-3
+            pb-3 pl-5 pr-5 mt-4'
+          to='/search'
+        >
           View More
         </Link>
       </div>

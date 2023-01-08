@@ -8,15 +8,17 @@ export const Heros = () => {
 
   return (
     <div>
-      <div className='d-none d-lg-block'>
-        <div className='row g-0 mt-5'>
-          <div className='col-sm-6 col-md-6'>
+      <div className='hidden lg:block'>
+        <div className='flex -mx-0 mt-5'>
+          <div className='sm:w-1/2 md:w-1/2'>
             <div className='col-image-left'></div>
           </div>
-          <div className='col-4 col-md-4 container d-flex justify-content-center align-items-center'>
-            <div className='ml-2'>
-              <h1>What have you been reading?</h1>
-              <p className='lead'>
+          <div className='w-1/2  max-w-container flex justify-center items-center'>
+            <div className='ml-4'>
+              <h1 className='text-red-200 text-xl'>
+                What have you been reading?
+              </h1>
+              <p className='lead text-white mt-2 w-full'>
                 The team here at Epiq Books would love to know what your
                 learning. Are you learning a new language? Are you learning a
                 new framework? Are you learning a new to programming? Let us
@@ -26,7 +28,8 @@ export const Heros = () => {
               {authState?.isAuthenticated ? (
                 <Link
                   type='button'
-                  className='btn-main-color btn-lg text-white'
+                  className='bg-black text-white rounded-lg hover:bg-gray-500 pt-2
+            pb-2 pl-4 pr-4 mt-3'
                   to='search'
                 >
                   Explore Top Books
@@ -40,21 +43,20 @@ export const Heros = () => {
           </div>
         </div>
         <div className='row g-0'>
-          <div
-            className='col-4 col-md-4 container d-flex
-                        justify-content-center align-items-center'
-          >
+          <div className='w-1/2 md:w-1/2 flex justify-center items-center'>
             <div className='ml-2'>
-              <h1>Our collection is always changing!</h1>
-              <p className='lead'>
+              <h1 className='text-red-200 text-xl'>
+                Our collection is always changing!
+              </h1>
+              <p className='lead text-white mt-2 w-full'>
                 Make sure to checkout our collection as tech is always changing!
                 We look to provide the best and up to date books for you to
                 learn from. Carefully chosen , our selection is the best around.
               </p>
             </div>
           </div>
-          <div className='col-sm-6 col-md-6'>
-            <div className='col-image-right'></div>
+          <div className='sm:w-1/2 md:w-1/2'>
+            <div className='col-image-right '></div>
           </div>
         </div>
       </div>

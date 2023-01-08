@@ -1,4 +1,6 @@
 import './App.css';
+import './tailwind.css';
+import './tailwind.output.css';
 import React from 'react';
 import { Footer } from './layouts/NavBarAndFooter/Footer';
 import { Navbar } from './layouts/NavBarAndFooter/Navbar';
