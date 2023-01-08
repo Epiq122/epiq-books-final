@@ -5,6 +5,10 @@ body {
   background-color: #cbcde4;
 }
 
+h5 {
+  font-size: 1.5rem;
+}
+
 :root {
   --mainOpacity: rgba(0, 0, 0, 0.55);
 }
