@@ -159,7 +159,7 @@ export const SearchBooksPage = () => {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
-    <div className='searchBooksMain'>
+    <div className=''>
       <div className='container'>
         <div>
           <div className='row mt-5'>
@@ -173,7 +173,7 @@ export const SearchBooksPage = () => {
                   onChange={(e) => setSearch(e.target.value)}
                 />
                 <button
-                  className='btn btn-success'
+                  className='btn btn-success '
                   onClick={() => handleSearchChange()}
                 >
                   Search
@@ -183,7 +183,7 @@ export const SearchBooksPage = () => {
             <div className='col-4'>
               <div className='dropdown'>
                 <button
-                  className='btn btn-secondary dropdown-toggle'
+                  className='btn btn-secondary dropdown-toggle bg-black text-white rounded-lg hover:bg-gray-500 px-6'
                   type='button'
                   id='dropdownMenuButton1'
                   data-bs-toggle='dropdown'
@@ -226,10 +226,10 @@ export const SearchBooksPage = () => {
           </div>
           {totalAmountOfBooks > 0 ? (
             <>
-              <div className='mt-3'>
+              <div className='mt-3 text-white'>
                 <h5>Number of results: ({totalAmountOfBooks})</h5>
               </div>
-              <p>
+              <p className='text-white'>
                 {indexOfFirstBook + 1} - {lastItem} of {totalAmountOfBooks}{' '}
                 items:
               </p>

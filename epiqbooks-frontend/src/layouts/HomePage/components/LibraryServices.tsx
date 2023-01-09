@@ -29,7 +29,10 @@ export const LibraryServices = () => {
                 Library Services
               </Link>
             ) : (
-              <Link className='btn bg-black btn-lg text-white' to='/login/'>
+              <Link
+                className='btn bg-black btn-lg hover:bg-gray-500 text-white mt-4'
+                to='/login/'
+              >
                 Sign up
               </Link>
             )}

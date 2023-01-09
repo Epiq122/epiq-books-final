@@ -79,14 +79,14 @@ export const Carousel = () => {
       </div>
       <div
         id='carouselExampleControls'
-        className='carousel carousel-dark slide mt-5
-                d-none d-lg-block'
+        className='carousel carousel-light slide mt-5
+                d-none d-lg-block px-8 '
         data-bs-interval='false'
       >
         {/* Desktop */}
         <div className='carousel-inner'>
           <div className='carousel-item active'>
-            <div className='row d-flex justify-content-center align-items-center'>
+            <div className='flex flex-row items-center justify-center'>
               {/*// loop through it 3 different times*/}
               {books.slice(0, 3).map((book) => (
                 <ReturnBook book={book} key={book.id} />
@@ -94,14 +94,14 @@ export const Carousel = () => {
             </div>
           </div>
           <div className='carousel-item'>
-            <div className='row d-flex justify-content-center align-items-center'>
+            <div className='flex flex-row items-center justify-center'>
               {books.slice(3, 6).map((book) => (
                 <ReturnBook book={book} key={book.id} />
               ))}
             </div>
           </div>
           <div className='carousel-item'>
-            <div className='row d-flex justify-content-center align-items-center'>
+            <div className='flex flex-row items-center justify-center'>
               {books.slice(6, 9).map((book) => (
                 <ReturnBook book={book} key={book.id} />
               ))}
@@ -143,7 +143,7 @@ export const Carousel = () => {
       <div className='homepage-carousel-title mt-3'>
         <Link
           className='bg-black text-white rounded-lg hover:bg-gray-500 pt-3
-            pb-3 pl-5 pr-5 mt-4'
+            pb-3 pl-5 pr- mt-3 py-2 px-4 text-lg'
           to='/search'
         >
           View More

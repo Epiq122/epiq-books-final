@@ -16,7 +16,7 @@ export function Navbar() {
   console.log(authState);
 
   return (
-    <nav className='navbar navbar-expand-lg navbar-dark bg-dark py-3'>
+    <nav className='navbar navbar-expand-lg navbar-dark bg-dark py-5'>
       {/* cuts off the corners of the page a little bit */}
       <div className='container-fluid'>
         <span className='navbar-brand'>Epiq Books</span>

@@ -35,7 +35,10 @@ export const Heros = () => {
                   Explore Top Books
                 </Link>
               ) : (
-                <Link className='btn bg-black btn-lg text-white ' to='/login'>
+                <Link
+                  className='btn bg-black btn-lg hover:bg-gray-500 text-white mt-4'
+                  to='/login'
+                >
                   Sign up
                 </Link>
               )}
@@ -67,8 +70,10 @@ export const Heros = () => {
           <div className='m-2'>
             <div className='col-image-left'></div>
             <div className='mt-2'>
-              <h1>What have you been reading?</h1>
-              <p className='lead'>
+              <h1 className='text-red-200 text-xl '>
+                What have you been reading?
+              </h1>
+              <p className='lead text-white'>
                 The team here at Epiq Books would love to know what your
                 learning. Are you learning a new language? Are you learning a
                 new framework? Are you learning a new to programming? Let us
@@ -84,7 +89,10 @@ export const Heros = () => {
                   Explore Top Books
                 </Link>
               ) : (
-                <Link className='btn bg-black btn-lg text-white ' to='/login'>
+                <Link
+                  className='btn bg-black btn-lg hover:bg-gray-500 text-white mt-4'
+                  to='/login'
+                >
                   Sign up
                 </Link>
               )}
@@ -93,8 +101,10 @@ export const Heros = () => {
           <div className='m-2'>
             <div className='col-image-right'></div>
             <div className='mt-2'>
-              <h1>Our collection is always changing!</h1>
-              <p className='lead'>
+              <h1 className='text-red-200 text-xl'>
+                Our collection is always changing!
+              </h1>
+              <p className='lead text-white'>
                 Make sure to checkout our collection as tech is always changing!
                 We look to provide the best and up to date books for you to
                 learn from. Carefully chosen , our selection is the best around.
