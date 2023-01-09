@@ -8,7 +8,7 @@ export function ShelfPage() {
         <nav>
           <div className='nav nav-tabs' id='nav-tab' role='tablist'>
             <button
-              className='nav-link active'
+              className='nav-link active bg-black text-white hover:bg-gray-400'
               id='nav-loans-tab'
               data-bs-toggle='tab'
               data-bs-target='#nav-loans'
@@ -20,7 +20,7 @@ export function ShelfPage() {
               Loans
             </button>
             <button
-              className='nav-link'
+              className='nav-link text-white bg-black hover:bg-gray-400'
               id='nav-history-tab'
               data-bs-toggle='tab'
               data-bs-target='#nav-history'

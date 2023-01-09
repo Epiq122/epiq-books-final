@@ -64,11 +64,11 @@ export const HistoryPage = () => {
     <div className='mt-2'>
       {histories.length > 0 ? (
         <>
-          <h5>Recent History:</h5>
+          <h5 className='text-white font-bold'>Recent History:</h5>
 
           {histories.map((history) => (
             <div key={history.id}>
-              <div className='card mt-3 shadow p-3 mb-3 bg-body rounded'>
+              <div className='card mt-3 shadow p-3 mb-3 bg-body rounded bg-slate-500'>
                 <div className='row g-0'>
                   <div className='col-md-2'>
                     <div className='d-none d-lg-block'>
@@ -108,15 +108,21 @@ export const HistoryPage = () => {
                   </div>
                   <div className='col'>
                     <div className='card-body'>
-                      <h5 className='card-title'> {history.author} </h5>
-                      <h4>{history.title}</h4>
-                      <p className='card-text'>{history.description}</p>
+                      <h5 className='card-title text-red-400 font-bold'>
+                        {history.author}
+                      </h5>
+                      <h4 className='text-2xl mb-2 text-black'>
+                        {history.title}
+                      </h4>
+                      <p className='card-text text-white mb-3'>
+                        {history.description}
+                      </p>
                       <hr />
-                      <p className='card-text'>
+                      <p className='card-text text-green-600'>
                         {' '}
                         Checked out on: {history.checkoutDate}
                       </p>
-                      <p className='card-text'>
+                      <p className='card-text text-rose-700'>
                         {' '}
                         Returned on: {history.returnedDate}
                       </p>

@@ -297,9 +297,11 @@ export function BookCheckoutPage() {
           </div>
           <div className='col-4 col-md-4 container'>
             <div className='ml-2'>
-              <h2>{book?.title}</h2>
-              <h5 className='text-primary'>{book?.author}</h5>
-              <p className='lead'>{book?.description}</p>
+              <h2 className='text-red-500 font-bold mt-3 mb-3 text-2xl '>
+                {book?.title}
+              </h2>
+              <h5 className='text-primary mb-3 text-xl'>{book?.author}</h5>
+              <p className='lead text-white'>{book?.description}</p>
               <StarsReview rating={totalStars} size={32} />
             </div>
           </div>

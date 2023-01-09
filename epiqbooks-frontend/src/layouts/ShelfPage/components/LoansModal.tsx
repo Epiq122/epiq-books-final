@@ -21,17 +21,22 @@ export const LoansModal: React.FC<{
       key={props.shelfCurrentLoan.book.id}
     >
       <div className='modal-dialog'>
-        <div className='modal-content'>
+        <div className='modal-content bg-gray-700'>
           <div className='modal-header'>
-            <h5 className='modal-title' id='staticBackdropLabel'>
+            <h5
+              className='modal-title text-white font-bold'
+              id='staticBackdropLabel'
+            >
               Loan Options
             </h5>
             <button
               type='button'
-              className='btn-close'
+              className='btn-close  text-white'
               data-bs-dismiss='modal'
               aria-label='close'
-            ></button>
+            >
+              X
+            </button>
           </div>
           <div className='modal-body'>
             <div className='container'>
@@ -55,13 +60,17 @@ export const LoansModal: React.FC<{
                     )}
                   </div>
                   <div className='col-10'>
-                    <h6>{props.shelfCurrentLoan.book.author}</h6>
-                    <h5>{props.shelfCurrentLoan.book.title}</h5>
+                    <h6 className='text-red-400 '>
+                      {props.shelfCurrentLoan.book.author}
+                    </h6>
+                    <h5 className='text-white font-bold'>
+                      {props.shelfCurrentLoan.book.title}
+                    </h5>
                   </div>
                 </div>
-                <hr />
+                <hr className='mt-2' />
                 {props.shelfCurrentLoan.daysLeft > 0 && (
-                  <p className='text-secondary'>
+                  <p className='text-secondary mt-3 text-green-600'>
                     Due in {props.shelfCurrentLoan.daysLeft} days
                   </p>
                 )}
@@ -79,7 +88,7 @@ export const LoansModal: React.FC<{
                       props.returnBook(props.shelfCurrentLoan.book.id)
                     }
                     data-bs-dismiss='modal'
-                    className='list-group-item list-group-item-action'
+                    className='list-group-item list-group-item-action  bg-amber-400 hover:bg-gray-500 text-white'
                     aria-current='true'
                   >
                     Return Book
@@ -93,8 +102,8 @@ export const LoansModal: React.FC<{
                     data-bs-dismiss='modal'
                     className={
                       props.shelfCurrentLoan.daysLeft < 0
-                        ? 'list-group-item list-group-item-action inactiveLink'
-                        : 'list-group-item list-group-item-action'
+                        ? 'list-group-item list-group-item-action inactiveLink  bg-amber-600 hover:bg-gray-500 text-white'
+                        : 'list-group-item list-group-item-action  bg-amber-600 hover:bg-gray-500 text-white'
                     }
                   >
                     {props.shelfCurrentLoan.daysLeft < 0

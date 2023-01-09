@@ -63,7 +63,7 @@ export const CheckoutAndReviewBox: React.FC<{
     return (
       <div>
         <hr />
-        <p>Must be signed in to leave a review.</p>
+        <p className='font-bold'>Must be signed in to leave a review.</p>
       </div>
     );
   }

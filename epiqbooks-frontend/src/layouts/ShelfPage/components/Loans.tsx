@@ -96,11 +96,11 @@ export const Loans = () => {
         {/* makes sure the endpoint returns at least 1 current loan */}
         {shelfCurrentLoans.length > 0 ? (
           <>
-            <h5>Current Loans: </h5>
+            <h5 className='text-red-600 text-xl'>Current Loans: </h5>
             {shelfCurrentLoans.map((shelfCurrentLoan) => (
               <div key={shelfCurrentLoan.book.id}>
                 <div className='row mt-3 mb-3'>
-                  <div className='col-4 col-md-4 container'>
+                  <div className='col-4 col-md-4 container mb-4'>
                     {shelfCurrentLoan.book?.img ? (
                       <img
                         src={shelfCurrentLoan.book?.img}
@@ -117,12 +117,12 @@ export const Loans = () => {
                       />
                     )}
                   </div>
-                  <div className='card col-3 col-md-3 container d-flex'>
+                  <div className='card col-3 col-md-3 container d-flex mt-3 shadow px-3 mb-3 rounded py-4 bg-stone-500'>
                     <div className='card-body'>
                       <div className='mt-3'>
-                        <h4>Loan Options</h4>
+                        <h4 className='font-bold text-red-500'>Loan Options</h4>
                         {shelfCurrentLoan.daysLeft > 0 && (
-                          <p className='text-secondary'>
+                          <p className='text-secondary text-green-600 font-bold'>
                             Due in {shelfCurrentLoan.daysLeft} days
                           </p>
                         )}
@@ -134,9 +134,9 @@ export const Loans = () => {
                             Overdue by {shelfCurrentLoan.daysLeft} days.
                           </p>
                         )}
-                        <div className='list-group mt-3'>
+                        <div className='list-group mt-3  '>
                           <button
-                            className='list-group-item list-group-item-action'
+                            className='list-group-item list-group-item-action bg-amber-400 hover:bg-gray-500 text-white'
                             aria-current='true'
                             data-bs-toggle='modal'
                             data-bs-target={`#modal${shelfCurrentLoan.book.id}`}
@@ -145,7 +145,7 @@ export const Loans = () => {
                           </button>
                           <Link
                             to={'search'}
-                            className='list-group-item list-group-item-action'
+                            className='list-group-item list-group-item-action  bg-amber-600 hover:bg-gray-500 text-white'
                           >
                             Search more books?
                           </Link>
@@ -157,7 +157,7 @@ export const Loans = () => {
                         appreciated!
                       </p>
                       <Link
-                        className='btn btn-primary'
+                        className='btn bg-black hover:bg-gray-500 mt-3 text-white'
                         to={`/checkout/${shelfCurrentLoan.book.id}`}
                       >
                         Leave a Review
@@ -177,7 +177,9 @@ export const Loans = () => {
           </>
         ) : (
           <>
-            <h3 className='mt-3'>Currently you have no books checked out</h3>
+            <h3 className='mt-3 text-white mb-3'>
+              Currently you have no books checked out
+            </h3>
             <Link className='btn btn-primary' to={'search'}>
               Search for books
             </Link>
