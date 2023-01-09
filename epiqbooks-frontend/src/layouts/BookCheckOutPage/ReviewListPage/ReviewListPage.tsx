@@ -83,12 +83,12 @@ export function ReviewListPage() {
   return (
     <div className='container m-5'>
       <div>
-        <h3>Comments: ({reviews.length})</h3>
+        <h3 className='text-white'>Comments: ({reviews.length})</h3>
       </div>
-      <p>
+      <p className='text-white mb-4'>
         {indexOfFirstReview + 1} to {lastItem} of {totalAmountOfReviews} items:
       </p>
-      <div className='row'>
+      <div className='row text-white =i py-4'>
         {/* this  maps through all the current reviews and then creates review component */}
         {reviews.map((review) => (
           <Review review={review} key={review.id} />

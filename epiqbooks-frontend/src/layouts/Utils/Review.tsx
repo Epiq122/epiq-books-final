@@ -15,15 +15,15 @@ export const Review: React.FC<{ review: ReviewModel }> = (props) => {
   return (
     <div>
       <div className='col-sm-8 col-md-8'>
-        <h5>{props.review.userEmail}</h5>
-        <div className='row'>
-          <div className='col'>{formattedDate}</div>
+        <h5 className='text-xl text-red-400'>{props.review.userEmail}</h5>
+        <div className='row font-bold'>
+          <div className='col text-xs mt-1'>{formattedDate}</div>
           <div className='col'>
             <StarsReview rating={props.review.rating} size={16} />
           </div>
         </div>
-        <div className='mt-2'>
-          <p>{props.review.reviewDescription}</p>
+        <div className='mt-3 mb-4'>
+          <p className='text-lg'>{props.review.reviewDescription}</p>
         </div>
       </div>
       <hr />

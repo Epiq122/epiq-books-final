@@ -26,7 +26,7 @@ export const StarsReview: React.FC<{ rating: Number; size: number }> = (
   }
 
   return (
-    <div className='d-flex'>
+    <div className='d-flex mt-5'>
       {/* this is an array that loops through and lets us create svgs dynamically */}
       {/* Iterartes through 3x */}
       {Array.from({ length: fullStars }, (_, i) => (

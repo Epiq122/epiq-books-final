@@ -37,9 +37,11 @@ export const Pagination: React.FC<{
   }
   return (
     <nav aria-label='...'>
-      <ul className='pagination'>
-        <li className='page-item' onClick={() => props.paginate(1)}>
-          <button className='page-link'>First</button>
+      <ul className='pagination '>
+        <li className='page-item ' onClick={() => props.paginate(1)}>
+          <button className='page-link bg-black text-white hover:bg-gray-500'>
+            First
+          </button>
         </li>
         {/* this renders all the middle pages   */}
         {pageNumbers.map((number) => (
@@ -48,18 +50,20 @@ export const Pagination: React.FC<{
             onClick={() => props.paginate(number)}
             // changes our CSS property
             className={
-              'page-item ' + (props.currentPage === number ? 'active' : '')
+              'page-item' + (props.currentPage === number ? 'active' : '')
             }
           >
-            <button className='page-link'>{number}</button>
+            <button className='page-link text-black'>{number}</button>
           </li>
         ))}
         {/*    this is for the last page in  the pagination*/}
         <li
-          className='page-item'
+          className='page-item '
           onClick={() => props.paginate(props.totalPages)}
         >
-          <button className='page-link'>Last Page</button>
+          <button className='page-link bg-black text-white hover:bg-gray-500'>
+            Last Page
+          </button>
         </li>
       </ul>
     </nav>

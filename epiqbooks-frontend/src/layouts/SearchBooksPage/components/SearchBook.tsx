@@ -5,10 +5,13 @@ import BookModel from '../../..//models/BookModel';
 
 export const SearchBook: React.FC<{ book: BookModel }> = (props) => {
   return (
-    <div className='card mt-3 shadow p-3 mb-3 rounded' id='searchBookCard'>
+    <div
+      className='mt-3 shadow px-3 mb-3 rounded py-4 bg-stone-500'
+      id='searchBookCard'
+    >
       <div className='row g-0'>
         <div className='col-md-2'>
-          <div className='d-none d-lg-block'>
+          <div className='d-none d-lg-block px-4'>
             {/*    this is  checking to see if there is an image there, and if so return it*/}
             {props.book.img ? (
               <img
@@ -29,8 +32,7 @@ export const SearchBook: React.FC<{ book: BookModel }> = (props) => {
             )}
           </div>
 
-          {/*Mobile*/}
-          <div className='d-lg-none d-flex justify-content-center align-items-center'>
+          <div className='d-lg-none d-flex justify-content-center align-items-center '>
             {/*    this is  checking to see if there is an image there, and if so return it*/}
             {props.book.img ? (
               <img
@@ -53,9 +55,11 @@ export const SearchBook: React.FC<{ book: BookModel }> = (props) => {
         </div>
         <div className='col-md-6'>
           <div className='card-body'>
-            <h5 className='card-title'>{props.book.author}</h5>
-            <h4>{props.book.title}</h4>
-            <p className='card-text'>{props.book.description}</p>
+            <h5 className='card-title text-xl text-red-300 font-bold'>
+              {props.book.author}
+            </h5>
+            <h4 className='text-xl mb-3 text-gray-900'>{props.book.title}</h4>
+            <p className='text-white text-lg'>{props.book.description}</p>
           </div>
         </div>
         <div className='col-md-4 d-flex justify-content-center align-items-center'>

@@ -86,9 +86,9 @@ export const LeaveAReview: React.FC<{ submitReview: any }> = (props) => {
       </ul>
       <StarsReview rating={starInput} size={32} />
       {displayInput && (
-        <form method='POST' action='#'>
+        <form method='POST' action='#' className='mt-3'>
           <hr />
-          <div className='mb-3'>
+          <div className='mb-3 mt-4'>
             <label className='form-label'>
               <b>Review Description</b>
             </label>
@@ -104,7 +104,7 @@ export const LeaveAReview: React.FC<{ submitReview: any }> = (props) => {
             <button
               type='button'
               onClick={() => props.submitReview(starInput, reviewDescription)}
-              className='btn btn-primary mt-3 text-black'
+              className='btn bg-black hover:bg-gray-500 mt-3 text-white'
             >
               Submit Review
             </button>
