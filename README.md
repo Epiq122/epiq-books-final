@@ -13,7 +13,7 @@ There will be an admin page where the admin can add books to the library, and qu
 ## Technologies Used
 
 * Database: MySQL
-* FrontEnd: HTML, CSS, TypeScript, Bootstrap, React
+* FrontEnd: HTML, CSS, TypeScript, Bootstrap, React, Tailwind css
 * BackEnd: Java, Spring Boot,Spring Boot Data JPA, Okta, Lombok, Maven
 
 # Learning Goals
