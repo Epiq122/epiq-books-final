@@ -97,13 +97,13 @@ export const AddNewBook = () => {
           All fields must be filled out
         </div>
       )}
-      <div className='card'>
-        <div className='card-header'>Add a new book</div>
+      <div className='card bg-gray-400'>
+        <div className='card-header text-white font-bold'>Add a new book</div>
         <div className='card-body'>
           <form method='POST'>
             <div className='row'>
               <div className='col-md-6 mb-3'>
-                <label className='form-label'>Title</label>
+                <label className='form-label font-bold'>Title</label>
                 <input
                   type='text'
                   className='form-control'
@@ -114,7 +114,7 @@ export const AddNewBook = () => {
                 />
               </div>
               <div className='col-md-3 mb-3'>
-                <label className='form-label'> Author </label>
+                <label className='form-label font-bold'> Author </label>
                 <input
                   type='text'
                   className='form-control'
@@ -125,9 +125,9 @@ export const AddNewBook = () => {
                 />
               </div>
               <div className='col-md-3 mb-3'>
-                <label className='form-label'> Category</label>
+                <label className='form-label font-bold'> Category</label>
                 <button
-                  className='form-control btn btn-secondary dropdown-toggle'
+                  className='form-control btn btn-secondary dropdown-toggle  bg-black text-white rounded-lg hover:bg-gray-500 px-6'
                   type='button'
                   id='dropdownMenuButton1'
                   data-bs-toggle='dropdown'
@@ -176,7 +176,7 @@ export const AddNewBook = () => {
               </div>
             </div>
             <div className='col-md-12 mb-3'>
-              <label className='form-label'>Description</label>
+              <label className='form-label font-bold'>Description</label>
               <textarea
                 className='form-control'
                 id='exampleFormControlTextarea1'
@@ -186,7 +186,7 @@ export const AddNewBook = () => {
               ></textarea>
             </div>
             <div className='col-md-3 mb-3'>
-              <label className='form-label'>Copies</label>
+              <label className='form-label font-bold'>Copies</label>
               <input
                 type='number'
                 className='form-control'
@@ -200,7 +200,7 @@ export const AddNewBook = () => {
             <div>
               <button
                 type='button'
-                className='btn btn-primary mt-3'
+                className='btn bg-blue-600 text-white font-bold hover:bg-blue-400 mt-3'
                 onClick={submitNewBook}
               >
                 Add Book
