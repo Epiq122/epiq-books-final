@@ -9,12 +9,12 @@ export const MessagesPage = () => {
 
   return (
     <div className='container'>
-      <div className='mt-3 mb-2'>
+      <div className='mt-3 mb-2 b'>
         <nav>
           <div className='nav nav-tabs' id='nav-tab' role='tablist'>
             <button
               onClick={() => setMessagesClick(false)}
-              className='nav-link active'
+              className='nav-link active text-white bg-black hover:bg-gray-400'
               id='nav-send-message-tab'
               data-bs-toggle='tab'
               data-bs-target='#nav-send-message'
@@ -27,7 +27,7 @@ export const MessagesPage = () => {
             </button>
             <button
               onClick={() => setMessagesClick(true)}
-              className='nav-link'
+              className='nav-link text-white bg-black hover:bg-gray-400'
               id='nav-message-tab'
               data-bs-toggle='tab'
               data-bs-target='#nav-message'
@@ -36,7 +36,7 @@ export const MessagesPage = () => {
               aria-controls='nav-message'
               aria-selected='false'
             >
-              Q/A Response/Pending
+              Awaiting Admin Response
             </button>
           </div>
         </nav>

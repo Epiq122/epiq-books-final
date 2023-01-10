@@ -21,15 +21,17 @@ export const AdminMessage: React.FC<{
 
   return (
     <div key={props.message.id}>
-      <div className='card mt-2 shadow p-3 bg-body rounded'>
-        <h5>
+      <div className='card mt-2 shadow p-3 bg-body rounded bg-gray-400'>
+        <h5 className='mb-2 text-white font-bold'>
           Case #{props.message.id} : {props.message.title}
         </h5>
-        <h6>{props.message.userEmail}</h6>
-        <p>{props.message.question}</p>
-        <hr />
+        <h6 className='text-amber-200' mb-2>
+          {props.message.userEmail}
+        </h6>
+        <p className='mt-2 text-stone-800 text-2xl'>{props.message.question}</p>
+        <hr className='mt-2' />
         <div>
-          <h5>Response: </h5>
+          <h5 className='mb-2 mt-2 font-bold'>Response: </h5>
           <form action='PUT'>
             {displayWarning && (
               <div className='alert alert-danger' role='alert'>
@@ -49,7 +51,7 @@ export const AdminMessage: React.FC<{
             <div>
               <button
                 type='button'
-                className='btn btn-primary mt-3'
+                className='btn mt-3 bg-blue-600 text-white font-bold hover:bg-blue-400'
                 onClick={submitBtn}
               >
                 Submit Response

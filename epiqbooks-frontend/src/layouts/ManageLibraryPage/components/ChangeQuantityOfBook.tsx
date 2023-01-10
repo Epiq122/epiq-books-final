@@ -79,7 +79,7 @@ export const ChangeQuantityOfBook: React.FC<{
   }
 
   return (
-    <div className='card mt-3 shadow p-3 mb-3 bg-body rounded'>
+    <div className='card mt-3 shadow p-3 mb-3 bg-body rounded bg-black text-white'>
       <div className='row g-0'>
         <div className='col-md-2'>
           <div className='d-none d-lg-block'>
@@ -116,31 +116,31 @@ export const ChangeQuantityOfBook: React.FC<{
         </div>
         <div className='mt-3 col-md-4'>
           <div className='d-flex justify-content-center align-items-center'>
-            <p>
+            <p className='text-amber-300'>
               Total Quantity: <b>{quantity}</b>
             </p>
           </div>
           <div className='d-flex justify-content-center align-items-center'>
-            <p>
+            <p className='text-am'>
               Books Remaining: <b>{remaining}</b>
             </p>
           </div>
         </div>
         <div className='mt-3 col-md-1'>
-          <div className='d-flex justify-content-start'>
+          <div className='d-flex justify-content-start mb-4'>
             <button className='m-1 btn btn-md btn-danger' onClick={deleteBook}>
               Delete
             </button>
           </div>
         </div>
         <button
-          className='m1 btn btn-md main-color text-white'
+          className='m1 btn btn-md bg-green-600 hover:bg-gray-500 text-white mb-1'
           onClick={increaseQuantity}
         >
           Add Quantity
         </button>
         <button
-          className='m1 btn btn-md btn-warning'
+          className='m1 btn btn-md btn-warningn bg-rose-600 hover:bg-gray-500 text-white'
           onClick={decreaseQuantity}
         >
           Decrease Quantity

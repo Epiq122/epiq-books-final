@@ -92,9 +92,11 @@ export const ChangeQuantityOfBooks = () => {
       {totalAmountOfBooks > 0 ? (
         <>
           <div className='mt-3'>
-            <h5>Number of results :({totalAmountOfBooks})</h5>
+            <h5 className='text-white'>
+              Number of results :({totalAmountOfBooks})
+            </h5>
           </div>
-          <p>
+          <p className='text-white'>
             {indexOfFirstBook + 1} to {lastItem} of {totalAmountOfBooks} items:
           </p>
           {books.map((book) => (
@@ -106,7 +108,7 @@ export const ChangeQuantityOfBooks = () => {
           ))}
         </>
       ) : (
-        <h5>Add a book before changing quantity</h5>
+        <h5 className='text-white'>Add a book before changing quantity</h5>
       )}
       {totalPages > 1 && (
         <Pagination

@@ -63,29 +63,37 @@ export const Messages = () => {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
-    <div className='mt-2'>
+    <div className='mt-'>
       {messages.length > 0 ? (
-        <>
-          <h5>Current Q/A: </h5>
+        <div>
+          <h5 className='text-white'>Current Q/A: </h5>
           {messages.map((message) => (
             <div key={message.id}>
-              <div className='card mt-2 shadow p-3 bg-body rounded'>
-                <h5>
+              <div className='card mt-2 shadow p-3 bg-body rounded bg-gray-400'>
+                <h5 className='mb-2 text-white font-bold'>
                   Case #{message.id}: {message.title}
                 </h5>
-                <h6>{message.userEmail}</h6>
-                <p>{message.question}</p>
-                <hr />
+                <h6 className='text-amber-200' mb-2>
+                  {message.userEmail}
+                </h6>
+                <p className='mt-2 text-stone-800 text-2xl'>
+                  {message.question}
+                </p>
+                <hr className='mt-2' />
                 <div>
-                  <h5>Response: </h5>
+                  <h5 className='mb-2 mt-2 font-bold'>Response: </h5>
                   {message.response && message.adminEmail ? (
                     <>
-                      <h6>{message.adminEmail} (admin)</h6>
-                      <p>{message.response}</p>
+                      <h6 className='font-bold text-green-200'>
+                        {message.adminEmail} (admin)
+                      </h6>
+                      <p className='text-rose-900 font-bold'>
+                        {message.response}
+                      </p>
                     </>
                   ) : (
-                    <p>
-                      <i>
+                    <p className='mt-2'>
+                      <i className='text-rose-900 font-bold'>
                         Pending response from administration. Please be patient.
                       </i>
                     </p>
@@ -94,9 +102,11 @@ export const Messages = () => {
               </div>
             </div>
           ))}
-        </>
+        </div>
       ) : (
-        <h5>All questions you submit will be shown here</h5>
+        <h5 className='text-white mt-3'>
+          All questions you submit will be shown here
+        </h5>
       )}
       {totalPages > 1 && (
         <Pagination

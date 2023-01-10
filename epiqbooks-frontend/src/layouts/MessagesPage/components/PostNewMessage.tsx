@@ -42,10 +42,12 @@ export const PostNewMessage = () => {
   };
 
   return (
-    <div className='card mt-3'>
+    <div className='card mt-3 bg-gray-500'>
       {/* shows a banner when a question is added successfully */}
 
-      <div className='card-header'>Ask question to an Epiq Books Admin</div>
+      <div className='card-header text-white'>
+        Ask question to an Epiq Books Admin
+      </div>
       <div className='card-body'>
         <form method='POST'>
           {displayWarning && (
@@ -59,7 +61,7 @@ export const PostNewMessage = () => {
             </div>
           )}
           <div className='mb-3'>
-            <label className='form-label'>Title</label>
+            <label className='form-label text-white font-bold'>Title</label>
             <input
               type='text'
               className='form-control'
@@ -70,7 +72,7 @@ export const PostNewMessage = () => {
             ></input>
           </div>
           <div className='mb-3'>
-            <label className='form-label'>Question</label>
+            <label className='form-label text-white font-bold'>Question</label>
             <textarea
               className='form-control'
               id='exampleFormControlTextarea1'
@@ -82,7 +84,7 @@ export const PostNewMessage = () => {
         </form>
         <button
           type='button'
-          className='btn mt-3'
+          className='btn mt-3 bg-green-500 text-white hover:bg-green-700 font-bold'
           id='submit-question'
           onClick={submitQuestion}
         >

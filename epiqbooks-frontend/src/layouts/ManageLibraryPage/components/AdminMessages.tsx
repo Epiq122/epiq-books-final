@@ -96,7 +96,7 @@ export const AdminMessages = () => {
     <div className='mt-3'>
       {messages.length > 0 ? (
         <>
-          <h5>Pending Q/A: </h5>
+          <h5 className='text-white'>Pending Admin Response </h5>
           {messages.map(
             (message) => (
               console.log(messages),
@@ -111,7 +111,7 @@ export const AdminMessages = () => {
           )}
         </>
       ) : (
-        <h5>No pending Q/A</h5>
+        <h5 className='text-rose-900 font-bold'>No pending questions</h5>
       )}
       {totalPages > 1 && (
         <Pagination

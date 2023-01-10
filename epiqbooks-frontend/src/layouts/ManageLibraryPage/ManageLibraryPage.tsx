@@ -5,108 +5,6 @@ import { AdminMessages } from './components/AdminMessages';
 import { AddNewBook } from './components/AddNewBook';
 import { ChangeQuantityOfBooks } from './components/ChangeQuantityOfBooks';
 
-// export const ManageLibraryPage = () => {
-//   const { authState } = useOktaAuth();
-
-//   const [changeQuantityOfBooksClicked, setChangeQuantityOfBooksClicked] =
-//     useState(false);
-//   const [messagesClick, setMessagesClick] = useState(false);
-
-//   function addBookClickHandler() {
-//     setChangeQuantityOfBooksClicked(false);
-//     setMessagesClick(false);
-//   }
-//   function changeQuantityOfBooksClickHandler() {
-//     setChangeQuantityOfBooksClicked(true);
-//     setMessagesClick(false);
-//   }
-
-//   function messagesClickHandler() {
-//     setChangeQuantityOfBooksClicked(false);
-//     setMessagesClick(true);
-//   }
-
-//   // Checks the user type
-//   if (authState?.accessToken?.claims.userType === undefined) {
-//     return <Redirect to='/home' />;
-//   }
-
-//   return (
-//     <div className='container'>
-//       <div className='mt-5'>
-//         <nav>
-//           <div className='nav nav-tabs' id='nav-tab' role='tablist'>
-//             <button
-//               onClick={addBookClickHandler}
-//               className='nav-link active'
-//               id='nav-add-book-tab'
-//               data-bs-toggle='tab'
-//               data-bs-target='#nav-add-book'
-//               type='button'
-//               role='tab'
-//               aria-controls='nav-add-book'
-//               aria-selected='false'
-//             >
-//               Add New Book
-//             </button>
-//             <button
-//               onClick={changeQuantityOfBooksClickHandler}
-//               className='nav-link'
-//               id='nav-quantity-tab'
-//               data-bs-toggle='tab'
-//               data-bs-target='#nav-quantity'
-//               type='button'
-//               role='tab'
-//               aria-controls='nav-quantity'
-//               aria-selected='true'
-//             >
-//               Change Quantity of Books
-//             </button>
-//             <button
-//               onClick={messagesClickHandler}
-//               className='nav-link'
-//               id='nav-messages-tab'
-//               data-bs-toggle='tab'
-//               data-bs-target='#nav-messages'
-//               type='button'
-//               role='tab'
-//               aria-controls='nav-messages'
-//               aria-selected='false'
-//             >
-//               Messages
-//             </button>
-//           </div>
-//         </nav>
-//         <div className='tab-contnent' id='nav-tabContent'>
-//           <div
-//             className='tab-pane fade show active'
-//             id='nav-add-book'
-//             role='tabpanel'
-//             aria-labelledby='nav-add-book-tab'
-//           >
-//             <AddNewBook />
-//           </div>
-//           <div
-//             className='tab-pane fade'
-//             id='nav-quantity'
-//             role='tabpanel'
-//             aria-labelledby='nav-quantity-tab'
-//           >
-//             {changeQuantityOfBooksClicked ? <ChangeQuantityOfBooks /> : <></>}
-//           </div>
-//           <div
-//             className='tab-pane fade'
-//             id='nav-messages'
-//             role='tabpanel'
-//             aria-labelledby='nav-messages-tab'
-//           >
-//             {messagesClick ? <AdminMessages /> : <></>}
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
 export const ManageLibraryPage = () => {
   const { authState } = useOktaAuth();
 
@@ -136,12 +34,12 @@ export const ManageLibraryPage = () => {
   return (
     <div className='container'>
       <div className='mt-5'>
-        <h3>Manage Library</h3>
+        <h3 className='text-white mb-3'>Manage Library</h3>
         <nav>
           <div className='nav nav-tabs' id='nav-tab' role='tablist'>
             <button
               onClick={addBookClickFunction}
-              className='nav-link active'
+              className='nav-link active text-white bg-black hover:bg-gray-400'
               id='nav-add-book-tab'
               data-bs-toggle='tab'
               data-bs-target='#nav-add-book'
@@ -150,11 +48,11 @@ export const ManageLibraryPage = () => {
               aria-controls='nav-add-book'
               aria-selected='false'
             >
-              Add new book
+              <p>Add new book</p>
             </button>
             <button
               onClick={changeQuantityOfBooksClickFunction}
-              className='nav-link'
+              className='nav-link text-white bg-black hover:bg-gray-400'
               id='nav-quantity-tab'
               data-bs-toggle='tab'
               data-bs-target='#nav-quantity'
@@ -167,7 +65,7 @@ export const ManageLibraryPage = () => {
             </button>
             <button
               onClick={messagesClickFunction}
-              className='nav-link'
+              className='nav-link text-white bg-black hover:bg-gray-400'
               id='nav-messages-tab'
               data-bs-toggle='tab'
               data-bs-target='#nav-messages'
