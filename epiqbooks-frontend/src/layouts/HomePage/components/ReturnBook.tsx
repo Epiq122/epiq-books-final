@@ -10,7 +10,7 @@ export const ReturnBook: React.FC<{ book: BookModel }> = (props) => {
       <div className='text-center text-white'>
         {props.book.img ? (
           <img
-            className='mx-auto'
+            className='mx-auto glass'
             src={props.book.img}
             alt='python book'
             width={151}
