@@ -42,7 +42,7 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
             .allowedOrigins(theAllowedOrigins);
     }
 
-    // this method will disable the http methods
+    // this method will disable the http methods from the spring data resrt config
     private void disableHttpMethods(Class theClass,
                                     RepositoryRestConfiguration config,
                                     HttpMethod[] theUnsupportedActions) {
