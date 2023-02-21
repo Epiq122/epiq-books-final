@@ -4,6 +4,7 @@ package com.gleasondev.epiqbooksbackend.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+
 @Entity
 @Table(name = "checkout")
 @Data
@@ -25,6 +26,9 @@ public class Checkout {
     @Column(name = "book_id")
     private Long bookId;
 
+    @ManyToOne
+    @JoinColumn(name = "book_id", insertable = false, updatable = false)
+    private Book book;
 
     public Checkout() {
 
