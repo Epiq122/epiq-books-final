@@ -35,4 +35,6 @@ public class Book {
     private String img;
     @OneToMany(mappedBy = "book")
     private List<Checkout> checkouts;
+    
+
 }

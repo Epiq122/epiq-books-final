@@ -1,7 +1,9 @@
 import React from 'react';
+import { LoginForm } from '../Login/LoginForm';
 import { Link, NavLink } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
 import { LoadingSpinner } from '../Utils/LoadingSpinner';
+import { SignupForm } from '../Login/SignupForm';
 
 export function Navbar() {
   // for our okta auth
@@ -81,6 +83,8 @@ export function Navbar() {
               </li>
             )}
           </ul>
+          <SignupForm />
+          <LoginForm />
         </div>
       </div>
     </nav>
