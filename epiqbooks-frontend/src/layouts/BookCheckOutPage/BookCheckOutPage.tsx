@@ -86,7 +86,7 @@ export function BookCheckoutPage() {
       const responseReviews = await fetch(reviewUrl);
 
       if (!responseReviews.ok) {
-        throw new Error('Something went wrong!');
+        throw new Error('Something went wrong!31');
       }
       const responseJsonReviews = await responseReviews.json();
       const responseData = responseJsonReviews._embedded.reviews;
@@ -135,7 +135,7 @@ export function BookCheckoutPage() {
         };
         const userReview = await fetch(url, requestOptions);
         if (!userReview.ok) {
-          throw new Error('Something went wrong');
+          throw new Error('Something went wrong / revies');
         }
         const userReviewResponseJson = await userReview.json();
         setIsReviewLeft(userReviewResponseJson);
@@ -163,7 +163,7 @@ export function BookCheckoutPage() {
         };
         const currentLoansCountResponse = await fetch(url, requestOptions);
         if (!currentLoansCountResponse.ok) {
-          throw new Error('Something went wrong!');
+          throw new Error('Something went wrong! / count');
         }
         const currentLoansCountResponseJson =
           await currentLoansCountResponse.json();
@@ -182,7 +182,7 @@ export function BookCheckoutPage() {
     const fetchUserCheckoutBook = async () => {
       // we do not want to call this api if the user is authenticated
       if (authState && authState.isAuthenticated) {
-        const url = `http://localhost:8080/api/books/secure/ischeckedout/byuser/?bookId=${bookId}`;
+        const url = `http://localhost:8080/api/books/secure/ischeckedout/byuser/?book=${bookId}`;
         // deal with authentication
         const requestOptions = {
           method: 'GET',
@@ -193,7 +193,7 @@ export function BookCheckoutPage() {
         };
         const bookCheckedOut = await fetch(url, requestOptions);
         if (!bookCheckedOut.ok) {
-          throw new Error('Something went wrong!');
+          throw new Error('Something went wrong!    ****');
         }
         const bookCheckedOutJson = await bookCheckedOut.json();
         setIsCheckedOut(bookCheckedOutJson);
@@ -233,7 +233,7 @@ export function BookCheckoutPage() {
   // for checking out the book
 
   async function checkOutBook() {
-    const url = `http://localhost:8080/api/books/secure/checkout/?bookId=${book?.id}`;
+    const url = `http://localhost:8080/api/books/secure/checkout/?book=${book?.id}`;
     const requestOptions = {
       method: 'PUT',
       headers: {
@@ -243,7 +243,7 @@ export function BookCheckoutPage() {
     };
     const checkoutResponse = await fetch(url, requestOptions);
     if (!checkoutResponse.ok) {
-      throw new Error('Something went wrong!');
+      throw new Error('Something went wrong! in checkout');
     }
     setIsCheckedOut(true);
   }
@@ -258,7 +258,7 @@ export function BookCheckoutPage() {
     const reviewRequestModel = new ReviewRequestModel(
       starInput,
       bookId,
-      reviewDescription
+      reviewDescription,
     );
     // creates a URL that acesses the endpoint in the spring app
     const url = `http://localhost:8080/api/reviews/secure`;

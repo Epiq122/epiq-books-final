@@ -6,6 +6,8 @@ package com.gleasondev.epiqbooksbackend.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "book")
@@ -33,13 +35,9 @@ public class Book {
     @Column(name = "img")
     private String img;
 
-    // Add one to many relationship with checkout
-//    @OneToMany(mappedBy = "book")
-//    private List<Checkout> checkouts;
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Checkout> checkouts = new ArrayList<>();
 
-
-    // checkout
-//    @OneToMany(mappedBy = "book")
-//    private List<Checkout> checkouts;
-
+    public Book() {
+    }
 }

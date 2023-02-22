@@ -57,7 +57,7 @@ export const Loans = () => {
   }
 
   async function returnBook(bookId: number) {
-    const url = `http://localhost:8080/api/books/secure/return/?bookId=${bookId}`;
+    const url = `http://localhost:8080/api/books/secure/return/?book=${bookId}`;
     const requestOptions = {
       method: 'PUT',
       headers: {
@@ -74,7 +74,7 @@ export const Loans = () => {
 
   // Renew Loan
   async function renewLoan(bookId: number) {
-    const url = `http://localhost:8080/api/books/secure/renew/loan/?bookId=${bookId}`;
+    const url = `http://localhost:8080/api/books/secure/renew/loan/?book=${bookId}`;
     const requestOptions = {
       method: 'PUT',
       headers: {

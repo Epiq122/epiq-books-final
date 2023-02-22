@@ -2,6 +2,7 @@ package com.gleasondev.epiqbooksbackend.config;
 
 
 import com.gleasondev.epiqbooksbackend.entity.Book;
+import com.gleasondev.epiqbooksbackend.entity.Checkout;
 import com.gleasondev.epiqbooksbackend.entity.Message;
 import com.gleasondev.epiqbooksbackend.entity.Review;
 import org.springframework.context.annotation.Configuration;
@@ -31,12 +32,14 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         config.exposeIdsFor(Book.class);
         config.exposeIdsFor(Review.class);
         config.exposeIdsFor(Message.class);
+        config.exposeIdsFor(Checkout.class);
 
 
         // disable the unsupported actions
         disableHttpMethods(Book.class, config, theUnsupportedActions);
         disableHttpMethods(Review.class, config, theUnsupportedActions);
         disableHttpMethods(Message.class, config, theUnsupportedActions);
+        disableHttpMethods(Checkout.class, config, theUnsupportedActions);
         /* Configure CORS Mapping */
         cors.addMapping(config.getBasePath() + "/**")
             .allowedOrigins(theAllowedOrigins);

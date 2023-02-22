@@ -23,28 +23,22 @@ public class Checkout {
 
     @Column(name = "return_date")
     private String returnDate;
-    @Column(name = "book_id")
-    private Long bookId;
+//    @Column(name = "book_id")
+//    private Long bookId;
 
-//    @ManyToOne
-//    @JoinColumn(name = "book_id", insertable = false, updatable = false)
-//    private Book book;
-
-    // Add relationship with book
-//    @ManyToOne
-//    @JoinColumn(name = "book_id", insertable = false, updatable = false)
-//    private Book book;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id")
+    private Book book;
 
     public Checkout() {
 
     }
 
-    public Checkout(String userEmail, String checkoutDate, String returnDate, Long bookId) {
+    public Checkout(String userEmail, String checkoutDate, String returnDate, Book book) {
         this.userEmail = userEmail;
         this.checkoutDate = checkoutDate;
         this.returnDate = returnDate;
-        this.bookId = bookId;
+        this.book = book;
 
     }
 
