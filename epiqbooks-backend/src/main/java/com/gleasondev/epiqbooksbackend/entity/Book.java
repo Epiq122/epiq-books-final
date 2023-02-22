@@ -6,7 +6,6 @@ package com.gleasondev.epiqbooksbackend.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "book")
@@ -33,6 +32,14 @@ public class Book {
     private String category;
     @Column(name = "img")
     private String img;
-    @OneToMany(mappedBy = "book")
-    private List<Checkout> checkouts;
+
+    // Add one to many relationship with checkout
+//    @OneToMany(mappedBy = "book")
+//    private List<Checkout> checkouts;
+
+
+    // checkout
+//    @OneToMany(mappedBy = "book")
+//    private List<Checkout> checkouts;
+
 }

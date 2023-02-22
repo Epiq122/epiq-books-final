@@ -26,9 +26,15 @@ public class Checkout {
     @Column(name = "book_id")
     private Long bookId;
 
-    @ManyToOne
-    @JoinColumn(name = "book_id", insertable = false, updatable = false)
-    private Book book;
+//    @ManyToOne
+//    @JoinColumn(name = "book_id", insertable = false, updatable = false)
+//    private Book book;
+
+    // Add relationship with book
+//    @ManyToOne
+//    @JoinColumn(name = "book_id", insertable = false, updatable = false)
+//    private Book book;
+
 
     public Checkout() {
 
@@ -39,5 +45,8 @@ public class Checkout {
         this.checkoutDate = checkoutDate;
         this.returnDate = returnDate;
         this.bookId = bookId;
+
     }
+
+
 }
