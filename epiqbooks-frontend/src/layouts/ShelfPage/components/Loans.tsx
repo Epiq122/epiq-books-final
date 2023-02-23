@@ -30,7 +30,7 @@ export const Loans = () => {
         };
         const shelfCurrentLoansResponse = await fetch(url, requestOptions);
         if (!shelfCurrentLoansResponse.ok) {
-          throw new Error('Something went wrong');
+          throw new Error('Something went wrong!!! current');
         }
         const shelfCurrentLoansData = await shelfCurrentLoansResponse.json();
         setShelfCurrentLoans(shelfCurrentLoansData);
@@ -84,7 +84,7 @@ export const Loans = () => {
     };
     const renewLoanResponse = await fetch(url, requestOptions);
     if (!renewLoanResponse.ok) {
-      throw new Error('Something went wrong');
+      throw new Error('Something went wrong / Loan cannot be renewed.');
     }
     setCheckout(!checkout);
   }

@@ -119,7 +119,7 @@ public class BookController {
 
     // checkout book by user
     @GetMapping("/secure/ischeckedout/byuser")
-    public Boolean checkoutBookByUser(@RequestParam Book book, @RequestHeader(value = "Authorization") String token) {
+    public Boolean checkoutBookByUser(@RequestBody Book book, @RequestHeader(value = "Authorization") String token) {
 //        String userEmail = "gordontest@email.com";
         String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
         return bookService.isBookCheckedOut(userEmail, book);
