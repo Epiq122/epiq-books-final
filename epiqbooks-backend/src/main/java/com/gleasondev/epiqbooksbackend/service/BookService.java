@@ -37,34 +37,61 @@ public class BookService {
         this.historyRepository = historyRepository;
     }
 
+    //    public Book checkoutBook(String userEmail, Long bookId) throws Exception {
+//
+//        Optional<Book> book = bookRepository.findById(bookId);
+//
+//        //we only want a user to be able to check out a single book one time
+//        Checkout validateCheckout = checkoutRepository.findByUserEmailAndBookId(userEmail, bookId);
+//
+//
+//        // checking to see if the book is available, the user doesnt currently have it checked out, and if the book exists
+//        if (book.isEmpty() || validateCheckout != null || book.get().getCopiesAvailable() <= 0) {
+//            throw new Exception("Book not found or Already Checked Out by user!");
+//        }
+//
+//        book.get().setCopiesAvailable(book.get().getCopiesAvailable() - 1);
+//        // update to DB
+//        bookRepository.save(book.get());
+//
+//        // this is our checkout object that we will save to the DB
+//        Checkout checkout = new Checkout(
+//                userEmail,
+//                // this is saying whats todays date and that it needs to be returned in 7 days
+//                LocalDate.now().toString(),
+//                LocalDate.now().plusDays(7).toString(),
+//                book.get().getId()
+//
+//        );
+//
+//        // save to DB
+//        checkoutRepository.save(checkout);
+//
+//        return book.get();
+//
+//
+//    }
     public Book checkoutBook(String userEmail, Long bookId) throws Exception {
-
         Optional<Book> book = bookRepository.findById(bookId);
 
-        //we only want a user to be able to check out a single book one time
-        Checkout validateCheckout = checkoutRepository.findByUserEmailAndBookId(userEmail, bookId);
-
-
-        // checking to see if the book is available, the user doesnt currently have it checked out, and if the book exists
-        if (book.isEmpty() || validateCheckout != null || book.get().getCopiesAvailable() <= 0) {
+        if (book.isEmpty() || book.get().getCopiesAvailable() <= 0) {
             throw new Exception("Book not found or Already Checked Out by user!");
         }
 
-        book.get().setCopiesAvailable(book.get().getCopiesAvailable() - 1);
-        // update to DB
-        bookRepository.save(book.get());
+        Checkout existingCheckout = checkoutRepository.findByUserEmailAndBookId(userEmail, bookId);
+        if (existingCheckout != null) {
+            throw new Exception("Book already checked out by user!");
+        }
 
-        // this is our checkout object that we will save to the DB
         Checkout checkout = new Checkout(
                 userEmail,
-                // this is saying whats todays date and that it needs to be returned in 7 days
                 LocalDate.now().toString(),
                 LocalDate.now().plusDays(7).toString(),
                 book.get().getId()
-
         );
 
-        // save to DB
+        book.get().setCopiesAvailable(book.get().getCopiesAvailable() - 1);
+        bookRepository.save(book.get());
         checkoutRepository.save(checkout);
 
         return book.get();
@@ -101,7 +128,11 @@ public class BookService {
         for (Book book : books) {
             // c is going to be each item in our checkoutList
             // finds a checkout that matches the book id
-            Optional<Checkout> checkout = checkoutList.stream().filter(c -> c.getBookId().equals(book.getId())).findFirst();
+
+            Optional<Checkout> checkout = checkoutList.stream()
+                                                      .filter(c -> c.getBookId() != null && c.getBookId()
+                                                                                             .equals(book.getId()))
+                                                      .findFirst();
 
             if (checkout.isPresent()) {
                 // creates the date the book is to be returned and a date for today
@@ -125,7 +156,7 @@ public class BookService {
         Checkout validateCheckout = checkoutRepository.findByUserEmailAndBookId(userEmail, bookId);
 
         if (book.isEmpty() || validateCheckout == null) {
-            throw new Exception("Book not found or not checked out by user!");
+            throw new BookNotFoundException("Book id " + bookId + " not found in database!");
         }
         book.get().setCopiesAvailable(book.get().getCopiesAvailable() + 1);
         bookRepository.save(book.get());
@@ -165,6 +196,12 @@ public class BookService {
             checkoutRepository.save(validateCheckout);
 
 
+        }
+    }
+
+    public static class BookNotFoundException extends RuntimeException {
+        public BookNotFoundException(String message) {
+            super(message);
         }
     }
 }

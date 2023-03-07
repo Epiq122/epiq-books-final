@@ -4,6 +4,8 @@ package com.gleasondev.epiqbooksbackend.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Objects;
+
 @Entity
 @Table(name = "checkout")
 @Data
@@ -36,4 +38,17 @@ public class Checkout {
         this.returnDate = returnDate;
         this.bookId = bookId;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Checkout checkout = (Checkout) o;
+        return Objects.equals(id, checkout.id) &&
+                Objects.equals(userEmail, checkout.userEmail) &&
+                Objects.equals(checkoutDate, checkout.checkoutDate) &&
+                Objects.equals(returnDate, checkout.returnDate) &&
+                Objects.equals(bookId, checkout.bookId); // add null check for bookId
+    }
+
 }
