@@ -78,7 +78,7 @@ public class BookService {
             throw new Exception("Book not found or Already Checked Out by user!");
         }
 
-        Checkout existingCheckout = checkoutRepository.findByUserEmailAndBookId(userEmail, bookId);
+        Checkout existingCheckout = checkoutRepository.findByUserEmailAndBook(userEmail, book.get());
         if (existingCheckout != null) {
             throw new Exception("Book already checked out by user!");
         }
@@ -87,7 +87,7 @@ public class BookService {
                 userEmail,
                 LocalDate.now().toString(),
                 LocalDate.now().plusDays(7).toString(),
-                book.get().getId()
+                book.get()
         );
 
         book.get().setCopiesAvailable(book.get().getCopiesAvailable() - 1);
@@ -106,15 +106,20 @@ public class BookService {
     }
 
     // find out how many books are checked out by a user
+//    public Integer currentLoansCount(String userEmail) {
+//        return checkoutRepository.findBooksByUserEmailAndBook(userEmail, book).size();
+//    }
+
     public Integer currentLoansCount(String userEmail) {
-        return checkoutRepository.findBooksByUserEmail(userEmail).size();
+        List<Checkout> checkouts = checkoutRepository.findByUserEmail(userEmail);
+        return checkouts.size();
     }
 
     public List<ShelfCurrentLoansResponse> currentLoans(String userEmail) throws Exception {
         List<ShelfCurrentLoansResponse> shelfCurrentLoansResponses = new ArrayList<>();
 
         // get a list of all the books that are checked out by the user
-        List<Checkout> checkoutList = checkoutRepository.findBooksByUserEmail(userEmail);
+        List<Checkout> checkoutList = checkoutRepository.findByUserEmail(userEmail);
 
         List<Long> bookIdList = new ArrayList<>();
         for (Checkout checkout : checkoutList) {
@@ -174,6 +179,7 @@ public class BookService {
                 book.get().getImg()
 
         );
+        history.setBook(book.get());
         historyRepository.save(history);
 
 
