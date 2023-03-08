@@ -1,3 +1,5 @@
+import BookModel from './BookModel';
+
 class HistoryModel {
   id: number;
   userEmail: string;
@@ -7,6 +9,7 @@ class HistoryModel {
   author: string;
   description: string;
   img: string;
+  book: BookModel;
 
   constructor(
     id: number,
@@ -16,7 +19,8 @@ class HistoryModel {
     title: string,
     author: string,
     description: string,
-    img: string
+    img: string,
+    book: BookModel,
   ) {
     this.id = id;
     this.userEmail = userEmail;
@@ -26,6 +30,7 @@ class HistoryModel {
     this.author = author;
     this.description = description;
     this.img = img;
+    this.book = book;
   }
 }
 

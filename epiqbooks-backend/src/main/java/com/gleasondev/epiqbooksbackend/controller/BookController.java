@@ -19,6 +19,7 @@ import java.util.List;
 public class BookController {
 
     private BookService bookService;
+//    private CheckoutService checkoutService;
 
     @Autowired
     public BookController(BookService bookService) {
@@ -75,5 +76,7 @@ public class BookController {
         String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
         bookService.renewBook(userEmail, bookId);
     }
+
+
 }
 

@@ -24,19 +24,31 @@ public class Checkout {
 
     @Column(name = "return_date")
     private String returnDate;
-    @Column(name = "book_id")
-    private Long bookId;
+
+
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    private Book book;
 
 
     public Checkout() {
 
     }
 
-    public Checkout(String userEmail, String checkoutDate, String returnDate, Long bookId) {
+    public Checkout(String userEmail, String checkoutDate, String returnDate, Book book) {
         this.userEmail = userEmail;
         this.checkoutDate = checkoutDate;
         this.returnDate = returnDate;
-        this.bookId = bookId;
+        this.book = book;
+    }
+
+    public Long getBookId() {
+        if (book != null) {
+            return book.getId();
+        } else {
+            // Handle the case where book is null
+            return null;
+        }
     }
 
     @Override
@@ -48,7 +60,7 @@ public class Checkout {
                 Objects.equals(userEmail, checkout.userEmail) &&
                 Objects.equals(checkoutDate, checkout.checkoutDate) &&
                 Objects.equals(returnDate, checkout.returnDate) &&
-                Objects.equals(bookId, checkout.bookId); // add null check for bookId
+                Objects.equals(book, checkout.book); // add null check for bookId
     }
 
 }

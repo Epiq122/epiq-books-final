@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface CheckoutRepository extends JpaRepository<Checkout, Long> {
 
-    Checkout findByUserEmailAndBookId(String userEmail, Long bookId);
+    Checkout findByUserEmailAndBook_Id(String userEmail, Long bookId);
 
     // find out how many books are checked out by a user
     List<Checkout> findBooksByUserEmail(String userEmail);

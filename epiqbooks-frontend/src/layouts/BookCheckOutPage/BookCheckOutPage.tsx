@@ -258,7 +258,7 @@ export function BookCheckoutPage() {
     const reviewRequestModel = new ReviewRequestModel(
       starInput,
       bookId,
-      reviewDescription
+      reviewDescription,
     );
     // creates a URL that acesses the endpoint in the spring app
     const url = `http://localhost:8080/api/reviews/secure`;

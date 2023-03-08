@@ -37,40 +37,7 @@ public class BookService {
         this.historyRepository = historyRepository;
     }
 
-    //    public Book checkoutBook(String userEmail, Long bookId) throws Exception {
-//
-//        Optional<Book> book = bookRepository.findById(bookId);
-//
-//        //we only want a user to be able to check out a single book one time
-//        Checkout validateCheckout = checkoutRepository.findByUserEmailAndBookId(userEmail, bookId);
-//
-//
-//        // checking to see if the book is available, the user doesnt currently have it checked out, and if the book exists
-//        if (book.isEmpty() || validateCheckout != null || book.get().getCopiesAvailable() <= 0) {
-//            throw new Exception("Book not found or Already Checked Out by user!");
-//        }
-//
-//        book.get().setCopiesAvailable(book.get().getCopiesAvailable() - 1);
-//        // update to DB
-//        bookRepository.save(book.get());
-//
-//        // this is our checkout object that we will save to the DB
-//        Checkout checkout = new Checkout(
-//                userEmail,
-//                // this is saying whats todays date and that it needs to be returned in 7 days
-//                LocalDate.now().toString(),
-//                LocalDate.now().plusDays(7).toString(),
-//                book.get().getId()
-//
-//        );
-//
-//        // save to DB
-//        checkoutRepository.save(checkout);
-//
-//        return book.get();
-//
-//
-//    }
+
     public Book checkoutBook(String userEmail, Long bookId) throws Exception {
         Optional<Book> book = bookRepository.findById(bookId);
 
@@ -78,7 +45,7 @@ public class BookService {
             throw new Exception("Book not found or Already Checked Out by user!");
         }
 
-        Checkout existingCheckout = checkoutRepository.findByUserEmailAndBookId(userEmail, bookId);
+        Checkout existingCheckout = checkoutRepository.findByUserEmailAndBook_Id(userEmail, bookId);
         if (existingCheckout != null) {
             throw new Exception("Book already checked out by user!");
         }
@@ -87,7 +54,7 @@ public class BookService {
                 userEmail,
                 LocalDate.now().toString(),
                 LocalDate.now().plusDays(7).toString(),
-                book.get().getId()
+                book.get()
         );
 
         book.get().setCopiesAvailable(book.get().getCopiesAvailable() - 1);
@@ -101,7 +68,7 @@ public class BookService {
 
     // verify if book is checked out by the user or not
     public Boolean isBookCheckedOut(String userEmail, Long bookId) {
-        Checkout checkout = checkoutRepository.findByUserEmailAndBookId(userEmail, bookId);
+        Checkout checkout = checkoutRepository.findByUserEmailAndBook_Id(userEmail, bookId);
         return checkout != null;
     }
 
@@ -130,8 +97,8 @@ public class BookService {
             // finds a checkout that matches the book id
 
             Optional<Checkout> checkout = checkoutList.stream()
-                                                      .filter(c -> c.getBookId() != null && c.getBookId()
-                                                                                             .equals(book.getId()))
+                                                      .filter(c -> c.getBook() != null && c.getBook()
+                                                                                           .equals(book.getId()))
                                                       .findFirst();
 
             if (checkout.isPresent()) {
@@ -153,7 +120,7 @@ public class BookService {
     public void returnBook(String userEmail, Long bookId) throws Exception {
         Optional<Book> book = bookRepository.findById(bookId);
 
-        Checkout validateCheckout = checkoutRepository.findByUserEmailAndBookId(userEmail, bookId);
+        Checkout validateCheckout = checkoutRepository.findByUserEmailAndBook_Id(userEmail, bookId);
 
         if (book.isEmpty() || validateCheckout == null) {
             throw new BookNotFoundException("Book id " + bookId + " not found in database!");
@@ -171,9 +138,12 @@ public class BookService {
                 book.get().getTitle(),
                 book.get().getAuthor(),
                 book.get().getDescription(),
-                book.get().getImg()
+                book.get().getImg(),
+                book.get()
+
 
         );
+
         historyRepository.save(history);
 
 
@@ -181,7 +151,7 @@ public class BookService {
 
     // RENEW A BOOK
     public void renewBook(String userEmail, Long bookId) throws Exception {
-        Checkout validateCheckout = checkoutRepository.findByUserEmailAndBookId(userEmail, bookId);
+        Checkout validateCheckout = checkoutRepository.findByUserEmailAndBook_Id(userEmail, bookId);
         if (validateCheckout == null) {
             throw new Exception("Book not found or not checked out by user!");
         }

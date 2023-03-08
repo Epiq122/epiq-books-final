@@ -17,7 +17,7 @@ class BookModel {
     copies?: number,
     copiesAvailable?: number,
     category?: string,
-    img?: string
+    img?: string,
   ) {
     this.id = id;
     this.title = title;
