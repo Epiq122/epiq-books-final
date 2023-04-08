@@ -21,6 +21,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+public static class BookNotFoundException extends RuntimeException {
+    public BookNotFoundException(String message) {
+        super(message);
+    }
+}
+
 @Service
 @Transactional
 public class BookService {
@@ -114,17 +120,21 @@ public class BookService {
 
     public void returnBook(String userEmail, Long bookId) throws Exception {
         Optional<Book> book = bookRepository.findById(bookId);
+        Optional<User> user = userRepository.findByEmail(userEmail);
 
         Checkout validateCheckout = checkoutRepository.findByUserEmailAndBook_Id(userEmail, bookId);
 
         if (book.isEmpty() || validateCheckout == null) {
             throw new BookNotFoundException("Book id " + bookId + " not found in database!");
         }
+        if (user.isEmpty()) {
+            throw new Exception("User not found!");
+        }
+
         book.get().setCopiesAvailable(book.get().getCopiesAvailable() + 1);
         bookRepository.save(book.get());
 
         checkoutRepository.deleteById(validateCheckout.getId());
-
 
         History history = new History(
                 userEmail,
@@ -133,12 +143,12 @@ public class BookService {
                 book.get().getTitle(),
                 book.get().getAuthor(),
                 book.get().getDescription(),
-                book.get().getImg(),
                 book.get(),
-                validateCheckout.getUser()
+                user.get()
         );
         historyRepository.save(history);
     }
+
 
     public void renewBook(String userEmail, Long bookId) throws Exception {
         Checkout validateCheckout = checkoutRepository.findByUserEmailAndBook_Id(userEmail, bookId);
@@ -154,12 +164,6 @@ public class BookService {
         if (date1.compareTo(date2) > 0 || date1.compareTo(date2) == 0) {
             validateCheckout.setReturnDate(LocalDate.now().plusDays(7).toString());
             checkoutRepository.save(validateCheckout);
-        }
-    }
-
-    public static class BookNotFoundException extends RuntimeException {
-        public BookNotFoundException(String message) {
-            super(message);
         }
     }
 }
