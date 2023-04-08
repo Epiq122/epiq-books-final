@@ -2,6 +2,8 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
 import { LoadingSpinner } from '../Utils/LoadingSpinner';
+import CustomLoginWidget from '../../Auth/CustomLoginWidget';
+import CustomSignupWidget from '../../Auth/CustomSignupWidget';
 
 export function Navbar() {
   // for our okta auth
@@ -83,6 +85,8 @@ export function Navbar() {
           </ul>
         </div>
       </div>
+      <CustomSignupWidget />
+      <CustomLoginWidget />
     </nav>
   );
 }
