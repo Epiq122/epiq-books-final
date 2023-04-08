@@ -1,0 +1,1 @@
+package com.gleasondev.epiqbooksbackend.entity;public enum UserRole {    USER,    ADMIN}

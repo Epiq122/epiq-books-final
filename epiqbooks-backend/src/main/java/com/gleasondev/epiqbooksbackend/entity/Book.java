@@ -6,12 +6,13 @@ package com.gleasondev.epiqbooksbackend.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
-@Table(name = "book")
-// this is from Lombok it will generate getters and setters for us
+@Table(name = "books")
 @Data
+
 public class Book {
 
 
@@ -19,10 +20,14 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
+    @NotBlank
     @Column(name = "title")
     private String title;
+    @NotBlank
     @Column(name = "author")
     private String author;
+    @NotBlank
     @Column(name = "description")
     private String description;
     @Column(name = "copies")
