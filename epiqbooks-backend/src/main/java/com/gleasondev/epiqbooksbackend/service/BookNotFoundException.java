@@ -1,0 +1,1 @@
+package com.gleasondev.epiqbooksbackend.service;public class BookNotFoundException extends RuntimeException {    public BookNotFoundException(String message) {        super(message);    }}
