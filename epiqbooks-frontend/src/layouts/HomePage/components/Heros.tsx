@@ -1,10 +1,11 @@
 import { useOktaAuth } from '@okta/okta-react/';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../../Auth/AuthContext';
 
 export const Heros = () => {
   // for our okta auth
-  const { authState } = useOktaAuth();
+  const { isAuthenticated } = useAuth();
 
   return (
     <div>
@@ -25,7 +26,7 @@ export const Heros = () => {
                 know what you are learning and we will help you find the best
                 books to help you learn.
               </p>
-              {authState?.isAuthenticated ? (
+              {isAuthenticated ? (
                 <Link
                   type='button'
                   className='bg-black text-white rounded-lg hover:bg-gray-500 pt-2
@@ -80,7 +81,7 @@ export const Heros = () => {
                 know what you are learning and we will help you find the best
                 books to help you learn
               </p>
-              {authState?.isAuthenticated ? (
+              {isAuthenticated ? (
                 <Link
                   type='button'
                   className='btn-main-color btn-lg text-white'

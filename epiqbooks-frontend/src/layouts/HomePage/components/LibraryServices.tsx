@@ -1,10 +1,11 @@
 import React from 'react';
 import { useOktaAuth } from '@okta/okta-react/';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../../Auth/AuthContext';
 
 export const LibraryServices = () => {
   // for our okta
-  const { authState } = useOktaAuth();
+  const { isAuthenticated } = useAuth();
 
   return (
     <div className='container my-5'>
@@ -19,7 +20,7 @@ export const LibraryServices = () => {
             back to you as soon as possible.
           </p>
           <div className='d-grid gap-2 justify-content-md-start mb-4 mb-lg-3'>
-            {authState?.isAuthenticated ? (
+            {isAuthenticated ? (
               <Link
                 to='/messages'
                 type='button'

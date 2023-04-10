@@ -6,7 +6,7 @@ import com.gleasondev.epiqbooksbackend.service.ReviewService;
 import com.gleasondev.epiqbooksbackend.utils.ExtractJWT;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin("http://localhost:3000") // to prevent coors error
+
 @RestController
 @RequestMapping("/api/reviews")
 public class ReviewController {

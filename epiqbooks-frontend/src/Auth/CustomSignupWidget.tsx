@@ -1,5 +1,4 @@
 import React, { useState, FormEvent } from 'react';
-import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 
 interface SignupResponse {
@@ -22,21 +21,25 @@ const CustomSignupWidget: React.FC = () => {
     }
 
     try {
-      const response = await axios.post<SignupResponse>(
-        'http://localhost:8080/api/auth/signup',
-        {
+      const response = await fetch('http://localhost:8080/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
           email,
           password,
-        },
-      );
+        }),
+      });
 
-      setSignedUp(true);
-    } catch (err) {
-      if (axios.isAxiosError(err) && err.response) {
-        setError(err.response.data.message);
+      if (!response.ok) {
+        const data = await response.json();
+        setError(data.message);
       } else {
-        setError('An unexpected error occurred.');
+        setSignedUp(true);
       }
+    } catch (err) {
+      setError('An unexpected error occurred.');
     }
   };
 

@@ -9,36 +9,18 @@ import { HomePage } from './layouts/HomePage/HomePage';
 import { SearchBooksPage } from './layouts/SearchBooksPage/SearchBooksPage';
 
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
-import { oktaConfig } from './lib/oktaConfig';
-import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
-import { LoginCallback, SecureRoute, Security } from '@okta/okta-react';
-import LoginWidget from './Auth/LoginWidget';
 import { ReviewListPage } from './layouts/BookCheckOutPage/ReviewListPage/ReviewListPage';
 import { ShelfPage } from './layouts/ShelfPage/ShelfPage';
 import { MessagesPage } from './layouts/MessagesPage/MessagesPage';
 import { ManageLibraryPage } from './layouts/ManageLibraryPage/ManageLibraryPage';
-
-// OKTA AUTH
-
-const oktaAuth = new OktaAuth(oktaConfig);
+import { AuthProvider } from './Auth/AuthContext';
 
 export const App = () => {
-  // custom auth handler
-  const customAuthHandler = () => {
-    history.push('/login');
-  };
   const history = useHistory();
-  const restoreOriginalUri = async (_oktaAuth: any, originalUri: any) => {
-    history.replace(toRelativeUrl(originalUri || '/', window.location.origin));
-  };
 
   return (
     <div className={'d-flex flex-column min-vh-100'}>
-      <Security
-        oktaAuth={oktaAuth}
-        restoreOriginalUri={restoreOriginalUri}
-        onAuthRequired={customAuthHandler}
-      >
+      <AuthProvider>
         <Navbar />
 
         <div className={'flex-grow-1'}>
@@ -46,6 +28,7 @@ export const App = () => {
             <Route path='/' exact>
               <Redirect to='/home' />
             </Route>
+
             <Route path='/home'>
               <HomePage />
             </Route>
@@ -58,24 +41,19 @@ export const App = () => {
             <Route path='/checkout/:bookId'>
               <BookCheckoutPage />
             </Route>
-            <Route
-              path='/login'
-              render={() => <LoginWidget config={oktaConfig} />}
-            />
-            <Route path='/login/callback' component={LoginCallback} />
-            <SecureRoute path='/shelf'>
+            <Route path='/shelf'>
               <ShelfPage />
-            </SecureRoute>
-            <SecureRoute path='/messages'>
+            </Route>
+            <Route path='/messages'>
               <MessagesPage />
-            </SecureRoute>
-            <SecureRoute path='/admin'>
+            </Route>
+            <Route path='/admin'>
               <ManageLibraryPage />
-            </SecureRoute>
+            </Route>
           </Switch>
         </div>
         <Footer />
-      </Security>
+      </AuthProvider>
     </div>
   );
 };
