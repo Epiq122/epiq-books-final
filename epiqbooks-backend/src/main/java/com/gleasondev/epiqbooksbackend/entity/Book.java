@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
-@Table(name = "books")
+@Table(name = "book")
 @Data
 
 public class Book {

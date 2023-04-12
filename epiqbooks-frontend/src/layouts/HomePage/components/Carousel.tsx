@@ -15,35 +15,42 @@ export const Carousel = () => {
       const url: string = `${baseUrl}?page=0&size=9`;
       const response = await fetch(url, {
         mode: 'cors',
-        credentials: 'include',
       });
       if (!response.ok) {
         throw new Error('Something went wrong');
       }
       const responseJson = await response.json();
 
-      const responseData = responseJson._embedded.books;
+      // Add a conditional check for the 'books' property
+      // if (responseJson._embedded && responseJson._embedded.books) {
+      //   const responseData = responseJson._embedded.books;
+      if (responseJson && responseJson.length > 0) {
+        const responseData = responseJson;
 
-      const loadedBooks: BookModel[] = [];
+        const loadedBooks: BookModel[] = [];
 
-      for (const key in responseData) {
-        loadedBooks.push({
-          id: responseData[key].id,
-          title: responseData[key].title,
-          author: responseData[key].author,
-          description: responseData[key].description,
-          copies: responseData[key].copies,
-          copiesAvailable: responseData[key].copiesAvailable,
-          category: responseData[key].category,
-          img: responseData[key].img,
-        });
+        for (const key in responseData) {
+          loadedBooks.push({
+            id: responseData[key].id,
+            title: responseData[key].title,
+            author: responseData[key].author,
+            description: responseData[key].description,
+            copies: responseData[key].copies,
+            copiesAvailable: responseData[key].copiesAvailable,
+            category: responseData[key].category,
+            img: responseData[key].img,
+          });
+        }
+        setBooks(loadedBooks);
+      } else {
+        console.log('No books found in the response');
       }
-      setBooks(loadedBooks);
       setIsLoading(false);
     };
     fetchBooks().catch((error: any) => {
       setIsLoading(false);
       setHttpError(error.message);
+      console.log('this is the error!!');
     });
   }, []);
 
@@ -57,7 +64,6 @@ export const Carousel = () => {
       </div>
     );
   }
-
   return (
     <div className='container mt-5' style={{ height: 550 }}>
       <div className='homepage-carousel-title'>
@@ -123,7 +129,7 @@ export const Carousel = () => {
       </div>
 
       {/* Mobile */}
-      <div className='d-lg-none mt-3'>
+      {/* <div className='d-lg-none mt-3'>
         <div className='row d-flex justify-content-center align-items-center'>
           <ReturnBook book={books[7]} key={books[7].id} />
         </div>
@@ -136,7 +142,7 @@ export const Carousel = () => {
         >
           View More
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 };

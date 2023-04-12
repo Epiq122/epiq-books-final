@@ -1,6 +1,7 @@
 import React, { useState, FormEvent } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useAuth } from '../Auth/AuthContext';
+
 interface LoginResponse {
   token: string;
 }
@@ -34,7 +35,7 @@ const CustomLoginWidget: React.FC = () => {
       const responseData: LoginResponse = await response.json();
       login(responseData.token);
     } catch (err) {
-      setError(err.message);
+      setError((err as Error).message);
     }
   };
 

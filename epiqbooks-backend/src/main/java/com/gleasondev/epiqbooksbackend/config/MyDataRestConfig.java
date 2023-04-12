@@ -32,7 +32,7 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         disableHttpMethods(Review.class, config, theUnsupportedActions);
         disableHttpMethods(Message.class, config, theUnsupportedActions);
 
-        cors.addMapping("/**")
+        cors.addMapping(config.getBasePath() + "/**")
             .allowedOrigins(theAllowedOrigins)
             .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS")
             .allowedHeaders("*")
@@ -48,13 +48,5 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
                       httpMethods.disable(theUnsupportedActions))
               .withCollectionExposure((metadata, httpMethods) ->
                       httpMethods.disable(theUnsupportedActions));
-    }
-
-    private void addCorsMappings(CorsRegistry cors) {
-        cors.addMapping("/**")
-            .allowedOrigins(theAllowedOrigins)
-            .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS")
-            .allowedHeaders("*")
-            .allowCredentials(true);
     }
 }
