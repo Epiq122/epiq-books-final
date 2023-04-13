@@ -20,12 +20,12 @@ export const Carousel = () => {
         throw new Error('Something went wrong');
       }
       const responseJson = await response.json();
-
-      // Add a conditional check for the 'books' property
-      // if (responseJson._embedded && responseJson._embedded.books) {
-      //   const responseData = responseJson._embedded.books;
-      if (responseJson && responseJson.length > 0) {
-        const responseData = responseJson;
+      if (
+        responseJson &&
+        responseJson.content &&
+        responseJson.content.length > 0
+      ) {
+        const responseData = responseJson.content;
 
         const loadedBooks: BookModel[] = [];
 
