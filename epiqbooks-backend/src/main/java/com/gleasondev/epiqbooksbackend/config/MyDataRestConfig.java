@@ -20,7 +20,7 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config,
                                                      CorsRegistry cors) {
 
-        // this is an http method array that wiull prevent the user from deleting or updating
+
         HttpMethod[] theUnsupportedActions = {
                 HttpMethod.POST,
                 HttpMethod.PATCH,
@@ -33,16 +33,15 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         config.exposeIdsFor(Message.class);
 
 
-        // disable the unsupported actions
         disableHttpMethods(Book.class, config, theUnsupportedActions);
         disableHttpMethods(Review.class, config, theUnsupportedActions);
         disableHttpMethods(Message.class, config, theUnsupportedActions);
-        /* Configure CORS Mapping */
+
         cors.addMapping(config.getBasePath() + "/**")
             .allowedOrigins(theAllowedOrigins);
     }
 
-    // this method will disable the http methods from the spring data resrt config
+
     private void disableHttpMethods(Class theClass,
                                     RepositoryRestConfiguration config,
                                     HttpMethod[] theUnsupportedActions) {

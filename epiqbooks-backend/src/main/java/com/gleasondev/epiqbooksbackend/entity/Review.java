@@ -31,4 +31,8 @@ public class Review {
     @Column(name = "book_id")
     private Long bookId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id", insertable = false, updatable = false)
+    private Book book;
+
 }

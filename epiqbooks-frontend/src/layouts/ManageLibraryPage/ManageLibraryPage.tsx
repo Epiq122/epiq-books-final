@@ -5,8 +5,12 @@ import {AddNewBook} from './components/AddNewBook';
 import {ChangeQuantityOfBooks} from './components/ChangeQuantityOfBooks';
 import {useAuth} from "../../Auth/AuthContext";
 
-export const ManageLibraryPage = () => {
-    const {isAuthenticated} = useAuth();
+interface ManageLibraryPageProps {
+    isAuthenticated: boolean;
+}
+
+export const ManageLibraryPage: React.FC<ManageLibraryPageProps> = ({isAuthenticated}) => {
+    const {user} = useAuth();
 
     if (!isAuthenticated) {
         return <Redirect to="/home"/>;
@@ -31,7 +35,8 @@ export const ManageLibraryPage = () => {
         setMessagesClick(true);
     }
 
-    if (authState?.accessToken?.claims.userType === undefined) {
+
+    if (user?.userType === undefined) {
         return <Redirect to="/home"/>;
     }
 
