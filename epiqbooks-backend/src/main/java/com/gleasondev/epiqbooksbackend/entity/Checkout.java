@@ -1,6 +1,5 @@
 package com.gleasondev.epiqbooksbackend.entity;
 
-
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,9 +14,6 @@ public class Checkout {
     @Column(name = "id")
     private Long id;
 
-
-    @Column(name = "user_email")
-    private String userEmail;
     @Column(name = "checkout_date")
     private String checkoutDate;
 
@@ -30,13 +26,16 @@ public class Checkout {
     @JoinColumn(name = "book_id", insertable = false, updatable = false)
     private Book book;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
     public Checkout() {
 
     }
 
-    public Checkout(String userEmail, String checkoutDate, String returnDate, Long bookId) {
-        this.userEmail = userEmail;
+    public Checkout(User user, String checkoutDate, String returnDate, Long bookId) {
+        this.user = user;
         this.checkoutDate = checkoutDate;
         this.returnDate = returnDate;
         this.bookId = bookId;

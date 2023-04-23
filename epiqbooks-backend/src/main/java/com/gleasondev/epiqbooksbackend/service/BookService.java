@@ -4,9 +4,11 @@ package com.gleasondev.epiqbooksbackend.service;
 import com.gleasondev.epiqbooksbackend.entity.Book;
 import com.gleasondev.epiqbooksbackend.entity.Checkout;
 import com.gleasondev.epiqbooksbackend.entity.History;
+import com.gleasondev.epiqbooksbackend.entity.User;
 import com.gleasondev.epiqbooksbackend.repository.BookRepository;
 import com.gleasondev.epiqbooksbackend.repository.CheckoutRepository;
 import com.gleasondev.epiqbooksbackend.repository.HistoryRepository;
+import com.gleasondev.epiqbooksbackend.repository.UserRepository;
 import com.gleasondev.epiqbooksbackend.responsemodels.ShelfCurrentLoansResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,19 +31,27 @@ public class BookService {
 
     private HistoryRepository historyRepository;
 
+    private UserRepository userRepository;
 
-    public BookService(BookRepository bookRepository, CheckoutRepository checkoutRepository, HistoryRepository historyRepository) {
+
+    public BookService(BookRepository bookRepository, CheckoutRepository checkoutRepository,
+                       HistoryRepository historyRepository, UserRepository userRepository) {
         this.bookRepository = bookRepository;
         this.checkoutRepository = checkoutRepository;
         this.historyRepository = historyRepository;
+        this.userRepository = userRepository;
     }
 
     public Book checkoutBook(String userEmail, Long bookId) throws Exception {
 
         Optional<Book> book = bookRepository.findById(bookId);
+        Optional<User> user = userRepository.findByEmail(userEmail);
 
+        if (user.isEmpty()) {
+            throw new Exception("User not found");
+        }
 
-        Checkout validateCheckout = checkoutRepository.findByUserEmailAndBookId(userEmail, bookId);
+        Checkout validateCheckout = checkoutRepository.findByUserAndBookId(user.get(), bookId);
 
 
         if (book.isEmpty() || validateCheckout != null || book.get().getCopiesAvailable() <= 0) {
@@ -54,7 +64,7 @@ public class BookService {
 
 
         Checkout checkout = new Checkout(
-                userEmail,
+                user.get(),
 
                 LocalDate.now().toString(),
                 LocalDate.now().plusDays(7).toString(),
@@ -72,20 +82,31 @@ public class BookService {
 
 
     public Boolean isBookCheckedOut(String userEmail, Long bookId) {
-        Checkout checkout = checkoutRepository.findByUserEmailAndBookId(userEmail, bookId);
+        Optional<User> user = userRepository.findByEmail(userEmail);
+        if (user.isEmpty()) {
+            return false;
+        }
+        Checkout checkout = checkoutRepository.findByUserAndBookId(user.get(), bookId);
         return checkout != null;
     }
 
 
     public Integer currentLoansCount(String userEmail) {
-        return checkoutRepository.findBooksByUserEmail(userEmail).size();
+        Optional<User> user = userRepository.findByEmail(userEmail);
+        if (user.isEmpty()) {
+            return 0;
+        }
+        return checkoutRepository.findByUser(user.get()).size();
     }
+
 
     public List<ShelfCurrentLoansResponse> currentLoans(String userEmail) throws Exception {
         List<ShelfCurrentLoansResponse> shelfCurrentLoansResponses = new ArrayList<>();
 
+        Optional<User> user = userRepository.findByEmail(userEmail);
 
-        List<Checkout> checkoutList = checkoutRepository.findBooksByUserEmail(userEmail);
+
+        List<Checkout> checkoutList = checkoutRepository.findByUser(user.get());
 
         List<Long> bookIdList = new ArrayList<>();
         for (Checkout checkout : checkoutList) {
@@ -119,7 +140,11 @@ public class BookService {
     public void returnBook(String userEmail, Long bookId) throws Exception {
         Optional<Book> book = bookRepository.findById(bookId);
 
-        Checkout validateCheckout = checkoutRepository.findByUserEmailAndBookId(userEmail, bookId);
+        Optional<User> user = userRepository.findByEmail(userEmail);
+
+
+        Checkout validateCheckout = checkoutRepository.findByUserAndBookId(user.get(), bookId);
+
 
         if (book.isEmpty() || validateCheckout == null) {
             throw new Exception("Book not found or not checked out by user!");
@@ -147,7 +172,8 @@ public class BookService {
 
 
     public void renewBook(String userEmail, Long bookId) throws Exception {
-        Checkout validateCheckout = checkoutRepository.findByUserEmailAndBookId(userEmail, bookId);
+        Optional<User> user = userRepository.findByEmail(userEmail);
+        Checkout validateCheckout = checkoutRepository.findByUserAndBookId(user.get(), bookId);
         if (validateCheckout == null) {
             throw new Exception("Book not found or not checked out by user!");
         }
