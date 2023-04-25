@@ -3,17 +3,16 @@ import React, {useEffect, useState} from 'react';
 import BookModel from '../../..//models/BookModel';
 import {LoadingSpinner} from '../../Utils/LoadingSpinner';
 import {Link} from 'react-router-dom';
-import {useAuth} from "../../../Auth/AuthContext";
+import {AuthContextValue, useAuth} from "../../../Auth/AuthContext";
+import {apiFetch} from "../../Utils/apiService";
 
 
 export const Carousel = () => {
-
     const [books, setBooks] = useState<BookModel[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [httpError, setHttpError] = useState(null);
 
-    const auth = useAuth();
-
+    const auth: AuthContextValue = useAuth();
 
     useEffect(() => {
         const fetchBooks = async () => {
@@ -22,43 +21,44 @@ export const Carousel = () => {
             const url: string = `${baseUrl}?page=0&size=9`;
             const accessToken = auth.getAccessToken();
 
-            const response = await fetch(url, {
-                headers: {
-                    Authorization: accessToken ? `Bearer ${accessToken}` : '',
-                },
-            });
+            try {
+                const headers: HeadersInit & { Authorization?: string } = {
+                    'Content-Type': 'application/json',
+                };
 
-            if (!response.ok) {
-                throw new Error('Something went wrong');
+                if (auth && auth.getAccessToken()) {
+                    headers.Authorization = `Bearer ${auth.getAccessToken()}`;
+                }
+                const responseJson: { _embedded?: { books: BookModel[] } } = await apiFetch(url, null, {headers});
+                const responseData = responseJson._embedded?.books;
+
+                if (!responseData) {
+                    throw new Error('Invalid API response');
+                }
+
+                const loadedBooks: BookModel[] = [];
+
+                for (const key in responseData) {
+                    loadedBooks.push({
+                        id: responseData[key].id,
+                        title: responseData[key].title,
+                        author: responseData[key].author,
+                        description: responseData[key].description,
+                        copies: responseData[key].copies,
+                        copiesAvailable: responseData[key].copiesAvailable,
+                        category: responseData[key].category,
+                        img: responseData[key].img,
+                    });
+                }
+
+                setBooks(loadedBooks);
+                setIsLoading(false);
+            } catch (error: any) {
+                setIsLoading(false);
+                setHttpError(error.message);
             }
-
-            const responseJson = await response.json();
-
-
-            const responseData = responseJson._embedded.books;
-
-
-            const loadedBooks: BookModel[] = [];
-
-            for (const key in responseData) {
-                loadedBooks.push({
-                    id: responseData[key].id,
-                    title: responseData[key].title,
-                    author: responseData[key].author,
-                    description: responseData[key].description,
-                    copies: responseData[key].copies,
-                    copiesAvailable: responseData[key].copiesAvailable,
-                    category: responseData[key].category,
-                    img: responseData[key].img,
-                });
-            }
-            setBooks(loadedBooks);
-            setIsLoading(false);
         };
-        fetchBooks().catch((error: any) => {
-            setIsLoading(false);
-            setHttpError(error.message);
-        });
+        fetchBooks();
     }, []);
 
     if (isLoading) {
@@ -71,7 +71,6 @@ export const Carousel = () => {
             </div>
         );
     }
-
     return (
         <div className="container mt-5" style={{height: 550}}>
             <div className="homepage-carousel-title">

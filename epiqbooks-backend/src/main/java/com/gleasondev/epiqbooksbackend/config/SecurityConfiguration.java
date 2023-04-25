@@ -1,6 +1,9 @@
 package com.gleasondev.epiqbooksbackend.config;
 
-import com.gleasondev.epiqbooksbackend.utils.ExtractJWT;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,6 +17,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import javax.crypto.SecretKey;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -77,8 +81,10 @@ public class SecurityConfiguration extends AbstractHttpConfigurer<SecurityConfig
 
             if (token != null) {
                 // parse the token and validate it
-                String userEmail = ExtractJWT.payloadJWTExtraction(token, "userEmail");
-                String role = ExtractJWT.payloadJWTExtraction(token, "role");
+                SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+                Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token.substring(7)).getBody();
+                String userEmail = claims.get("userEmail", String.class);
+                String role = claims.get("role", String.class);
 
                 if (userEmail != null) {
                     List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(role));
